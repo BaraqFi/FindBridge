@@ -39,10 +39,10 @@ export function MobileNav({ currentPage = "bridges" }: MobileNavProps) {
 
       {/* Mobile Menu Overlay */}
       {isOpen && (
-        <div className="fixed inset-0 z-50 bg-background/80 backdrop-blur-sm">
+        <div className="fixed inset-0 z-50 bg-background/60 backdrop-blur-sm">
           <div className="flex flex-col h-full">
             {/* Header */}
-            <div className="flex items-center justify-between p-4 border-b border-border/40">
+            <div className="flex items-center justify-between p-4 border-b border-border">
               <Link href="/" className="flex items-center space-x-2" onClick={() => setIsOpen(false)}>
                 <img 
                   src="/findbridge.png" 
@@ -101,7 +101,7 @@ export function MobileNav({ currentPage = "bridges" }: MobileNavProps) {
             </nav>
 
             {/* Footer */}
-            <div className="p-4 border-t border-border/40">
+            <div className="p-4 border-t border-border">
               <div className="text-sm text-muted-foreground text-center">
                 Cross-Chain Bridge Aggregator
               </div>
