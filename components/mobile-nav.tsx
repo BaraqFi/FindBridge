@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { Menu, X, Globe } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { ThemeToggle } from "@/components/theme-toggle"
@@ -21,6 +21,20 @@ export function MobileNav({ currentPage = "bridges" }: MobileNavProps) {
 
   const toggleMenu = () => setIsOpen(!isOpen)
 
+  // Prevent page scrolling when menu is open
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = 'hidden'
+    } else {
+      document.body.style.overflow = 'unset'
+    }
+
+    // Cleanup on unmount
+    return () => {
+      document.body.style.overflow = 'unset'
+    }
+  }, [isOpen])
+
   return (
     <div className="md:hidden">
       {/* Mobile Menu Button */}
@@ -39,8 +53,14 @@ export function MobileNav({ currentPage = "bridges" }: MobileNavProps) {
 
       {/* Mobile Menu Overlay */}
       {isOpen && (
-        <div className="fixed inset-0 z-50 bg-background/60 backdrop-blur-sm">
-          <div className="flex flex-col h-full">
+        <div 
+          className="fixed inset-0 z-50 bg-background/80 backdrop-blur-sm"
+          onClick={() => setIsOpen(false)}
+        >
+          <div 
+            className="flex flex-col h-full"
+            onClick={(e) => e.stopPropagation()}
+          >
             {/* Header */}
             <div className="flex items-center justify-between p-4 border-b border-border">
               <Link href="/" className="flex items-center space-x-2" onClick={() => setIsOpen(false)}>
@@ -62,14 +82,14 @@ export function MobileNav({ currentPage = "bridges" }: MobileNavProps) {
             </div>
 
             {/* Navigation Links */}
-            <nav className="flex-1 px-4 py-8">
+            <nav className="flex-1 px-4 py-8 bg-background/95 backdrop-blur-md">
               <div className="space-y-4">
                 <Link
                   href="/"
-                  className={`block text-lg font-medium transition-colors ${
+                  className={`block text-lg font-medium transition-colors px-4 py-3 rounded-lg ${
                     currentPage === "bridges"
-                      ? "text-primary"
-                      : "text-muted-foreground hover:text-foreground"
+                      ? "text-primary bg-primary/10"
+                      : "text-foreground hover:text-foreground hover:bg-accent/50"
                   }`}
                   onClick={() => setIsOpen(false)}
                 >
@@ -77,10 +97,10 @@ export function MobileNav({ currentPage = "bridges" }: MobileNavProps) {
                 </Link>
                 <Link
                   href="/chains"
-                  className={`block text-lg font-medium transition-colors ${
+                  className={`block text-lg font-medium transition-colors px-4 py-3 rounded-lg ${
                     currentPage === "chains"
-                      ? "text-primary"
-                      : "text-muted-foreground hover:text-foreground"
+                      ? "text-primary bg-primary/10"
+                      : "text-foreground hover:text-foreground hover:bg-accent/50"
                   }`}
                   onClick={() => setIsOpen(false)}
                 >
@@ -88,10 +108,10 @@ export function MobileNav({ currentPage = "bridges" }: MobileNavProps) {
                 </Link>
                 <Link
                   href="/resources"
-                  className={`block text-lg font-medium transition-colors ${
+                  className={`block text-lg font-medium transition-colors px-4 py-3 rounded-lg ${
                     currentPage === "resources"
-                      ? "text-primary"
-                      : "text-muted-foreground hover:text-foreground"
+                      ? "text-primary bg-primary/10"
+                      : "text-foreground hover:text-foreground hover:bg-accent/50"
                   }`}
                   onClick={() => setIsOpen(false)}
                 >
@@ -102,9 +122,9 @@ export function MobileNav({ currentPage = "bridges" }: MobileNavProps) {
 
             {/* Footer */}
             <div className="p-4 border-t border-border">
-              <div className="text-sm text-muted-foreground text-center">
+              {/* <div className="text-sm text-muted-foreground text-center">
                 Cross-Chain Bridge Aggregator
-              </div>
+              </div> */}
             </div>
           </div>
         </div>
