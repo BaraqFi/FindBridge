@@ -1,23 +1,6 @@
 "use client"
 
 import { useState } from "react"
-import type { Metadata } from "next"
-
-export const metadata: Metadata = {
-  title: "Blockchain Chains",
-  description: "Explore all blockchain networks with cross-chain bridge activity. View TVL, market share, and bridge statistics for each chain.",
-  keywords: [
-    "blockchain chains",
-    "Ethereum",
-    "Polygon",
-    "Arbitrum",
-    "BSC",
-    "Avalanche",
-    "chain analytics",
-    "blockchain TVL",
-    "cross-chain networks"
-  ],
-}
 import { Search, ChevronRight, RefreshCw } from "lucide-react"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
