@@ -9,7 +9,7 @@ export function Footer() {
           {/* Left side - Copyright and Twitter */}
           <div className="flex items-center space-x-6">
             <p className="text-muted-foreground text-sm">© 2025 FindBridge. All rights reserved.</p>
-            <Link
+            {/* <Link
               href="https://x.com/findbridge"
               target="_blank"
               rel="noopener noreferrer"
@@ -17,7 +17,7 @@ export function Footer() {
             >
               <Twitter className="h-5 w-5" />
               <span className="sr-only">Follow us on X</span>
-            </Link>
+            </Link> */}
           </div>
 
           {/* Right side - Created by */}

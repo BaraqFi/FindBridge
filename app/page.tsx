@@ -1,7 +1,7 @@
 "use client"
 
 import { useState, useMemo } from "react"
-import { Search, ExternalLink, Filter, TrendingUp, Activity, Globe, DollarSign, Users, RefreshCw } from "lucide-react"
+import { Search, ExternalLink, Filter, TrendingUp, Activity, Globe, DollarSign, Users } from "lucide-react"
 import { Input } from "@/components/ui/input"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
@@ -9,6 +9,7 @@ import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { ThemeToggle } from "@/components/theme-toggle"
 import { Footer } from "@/components/footer"
+import { MobileNav } from "@/components/mobile-nav"
 import { BridgeCardSkeleton, MarketSummarySkeleton } from "@/components/loading-skeleton"
 import { useBridges } from "@/hooks/useBridges"
 import { useMarketSummary } from "@/hooks/useMarketSummary"
@@ -47,12 +48,11 @@ export default function FindBridge() {
   const [sourceChain, setSourceChain] = useState("all")
   const [destinationChain, setDestinationChain] = useState("all")
 
-  const { bridges, loading: bridgesLoading, error: bridgesError, refreshData: refreshBridges } = useBridges()
+  const { bridges, loading: bridgesLoading, error: bridgesError } = useBridges()
   const {
     marketSummary,
     loading: summaryLoading,
     error: summaryError,
-    refreshData: refreshSummary,
   } = useMarketSummary()
 
   // Get unique chains for filter dropdowns
@@ -84,9 +84,6 @@ export default function FindBridge() {
     })
   }, [bridges, searchTerm, sourceChain, destinationChain])
 
-  const handleRefresh = async () => {
-    await Promise.all([refreshBridges(), refreshSummary()])
-  }
 
   return (
     <>
@@ -117,28 +114,16 @@ export default function FindBridge() {
               <Link href="/chains" className="text-muted-foreground hover:text-foreground transition-colors">
                 Chains
               </Link>
-              <a href="#" className="text-muted-foreground hover:text-foreground transition-colors">
-                Analytics
-              </a>
-              <a href="#" className="text-muted-foreground hover:text-foreground transition-colors">
+              <Link href="/resources" className="text-muted-foreground hover:text-foreground transition-colors">
                 Resources
-              </a>
-              <a href="#" className="text-muted-foreground hover:text-foreground transition-colors">
-                Research
-              </a>
+              </Link>
             </nav>
 
             <div className="flex items-center space-x-2">
-              <Button
-                variant="ghost"
-                size="icon"
-                onClick={handleRefresh}
-                disabled={bridgesLoading || summaryLoading}
-                className="h-9 w-9"
-              >
-                <RefreshCw className={`h-4 w-4 ${bridgesLoading || summaryLoading ? "animate-spin" : ""}`} />
-              </Button>
-              <ThemeToggle />
+              <div className="hidden md:block">
+                <ThemeToggle />
+              </div>
+              <MobileNav currentPage="bridges" />
             </div>
           </div>
         </div>
@@ -157,7 +142,15 @@ export default function FindBridge() {
             with live updates.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button size="lg" className="bg-primary hover:bg-primary/90">
+            <Button 
+              size="lg" 
+              className="bg-primary hover:bg-primary/90"
+              onClick={() => {
+                document.getElementById('bridge-filters')?.scrollIntoView({ 
+                  behavior: 'smooth' 
+                })
+              }}
+            >
               View Bridges
             </Button>
             <Button size="lg" variant="outline" asChild>
@@ -264,7 +257,7 @@ export default function FindBridge() {
       </section>
 
       {/* Filters */}
-      <section className="px-4 sm:px-6 lg:px-8 pb-8">
+      <section id="bridge-filters" className="px-4 sm:px-6 lg:px-8 pb-8">
         <div className="max-w-7xl mx-auto">
           <Card className="bg-card/50 border-border/50 backdrop-blur-sm">
             <CardContent className="p-6">
@@ -450,28 +443,36 @@ export default function FindBridge() {
 
                       {/* Use Bridge Button */}
                       <div className="mt-auto pt-4">
-                        <Button 
-                          className="w-full" 
-                          asChild 
-                          disabled={bridge.status === "paused" || bridge.status === "inactive"}
-                        >
-                          <a
-                            href={bridge.link}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="flex items-center justify-center space-x-2"
-                          >
-                            <span>
-                              {bridge.status === "paused" 
-                                ? "Bridge Paused" 
-                                : bridge.status === "inactive" 
-                                ? "Bridge Inactive" 
-                                : "Use Bridge"
-                              }
+                        {bridge.status === "inactive" ? (
+                          // Inactive bridge button - responsive styling for light/dark mode
+                          <div className="w-full bg-card text-muted-foreground border border-border rounded-md px-4 py-2 text-center cursor-not-allowed dark:border-black">
+                            <span className="flex items-center justify-center space-x-2">
+                              <span>Bridge Inactive</span>
                             </span>
-                            {bridge.status === "active" && <ExternalLink className="h-4 w-4" />}
-                          </a>
-                        </Button>
+                          </div>
+                        ) : (
+                          // Active/Paused bridge button - normal styling
+                          <Button 
+                            className="w-full" 
+                            asChild 
+                            disabled={bridge.status === "paused"}
+                          >
+                            <a
+                              href={bridge.link}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="flex items-center justify-center space-x-2"
+                            >
+                              <span>
+                                {bridge.status === "paused" 
+                                  ? "Bridge Paused" 
+                                  : "Use Bridge"
+                                }
+                              </span>
+                              {bridge.status === "active" && <ExternalLink className="h-4 w-4" />}
+                            </a>
+                          </Button>
+                        )}
                       </div>
                     </CardContent>
                   </Card>

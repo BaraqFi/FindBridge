@@ -1,17 +1,18 @@
 "use client"
 
 import { useState } from "react"
-import { Search, ChevronRight, RefreshCw } from "lucide-react"
+import { Search, ChevronRight } from "lucide-react"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Footer } from "@/components/footer"
 import { useChains } from "@/hooks/useChains"
+import { MobileNav } from "@/components/mobile-nav"
 import Link from "next/link"
 
 export default function ChainsPage() {
   const [searchTerm, setSearchTerm] = useState("")
-  const { chains, loading, error, refreshData } = useChains()
+  const { chains, loading, error } = useChains()
 
   const filteredChains = chains.filter((chain) => chain.name.toLowerCase().includes(searchTerm.toLowerCase()))
 
@@ -40,21 +41,15 @@ export default function ChainsPage() {
               <Link href="/chains" className="text-primary font-medium">
                 Chains
               </Link>
-              <a href="#" className="text-muted-foreground hover:text-foreground transition-colors">
-                Analytics
-              </a>
-              <a href="#" className="text-muted-foreground hover:text-foreground transition-colors">
+              <Link href="/resources" className="text-muted-foreground hover:text-foreground transition-colors">
                 Resources
-              </a>
-              <a href="#" className="text-muted-foreground hover:text-foreground transition-colors">
-                Research
-              </a>
+              </Link>
             </nav>
             <div className="flex items-center space-x-2">
-              <Button variant="ghost" size="icon" onClick={refreshData} disabled={loading} className="h-9 w-9">
-                <RefreshCw className={`h-4 w-4 ${loading ? "animate-spin" : ""}`} />
-              </Button>
-              <div className="w-9 h-9" />
+              <div className="hidden md:block">
+                <div className="w-9 h-9" />
+              </div>
+              <MobileNav currentPage="chains" />
             </div>
           </div>
         </div>
