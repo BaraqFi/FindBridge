@@ -12,6 +12,11 @@ export const metadata: Metadata = {
     template: "%s | FindBridge"
   },
   description: "Discover and compare cross-chain bridges for seamless cryptocurrency transfers across multiple blockchains. Monitor TVL, fees, and activity with comprehensive analytics.",
+  icons: {
+    icon: '/favicon.ico',
+    shortcut: '/favicon.ico',
+    apple: '/findbridge.png',
+  },
   keywords: [
     "cross-chain bridge",
     "blockchain bridge",
