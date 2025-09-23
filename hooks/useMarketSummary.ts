@@ -4,12 +4,26 @@ import { useState, useEffect } from "react"
 import { apiClient } from "@/lib/api"
 import type { MarketSummary } from "@/types/bridge"
 
+/**
+ * Custom hook for managing market summary data
+ * 
+ * Provides state management for aggregated market data including TVL,
+ * volume, bridge counts, and top destinations. Automatically fetches
+ * market summary data on component mount.
+ * 
+ * @returns Object containing market summary data, loading state, error state, and refresh function
+ */
 export function useMarketSummary() {
-  const [marketSummary, setMarketSummary] = useState<MarketSummary | null>(null)
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState<string | null>(null)
-  const [lastUpdated, setLastUpdated] = useState<string | null>(null)
+  // State management for market summary data
+  const [marketSummary, setMarketSummary] = useState<MarketSummary | null>(null) // Market summary object
+  const [loading, setLoading] = useState(true) // Loading state indicator
+  const [error, setError] = useState<string | null>(null) // Error message if fetch fails
+  const [lastUpdated, setLastUpdated] = useState<string | null>(null) // Last update timestamp
 
+  /**
+   * Fetch market summary data from the API
+   * Handles loading states, error states, and data updates
+   */
   const fetchMarketSummary = async () => {
     try {
       setLoading(true)
@@ -29,10 +43,15 @@ export function useMarketSummary() {
     }
   }
 
+  /**
+   * Refresh market summary data manually
+   * Useful for user-triggered data updates
+   */
   const refreshData = async () => {
     await fetchMarketSummary()
   }
 
+  // Fetch market summary data on component mount
   useEffect(() => {
     fetchMarketSummary()
   }, [])

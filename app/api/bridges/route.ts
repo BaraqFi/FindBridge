@@ -1,7 +1,18 @@
 import { NextResponse } from "next/server"
 import type { Bridge, ApiResponse } from "@/types/bridge"
 
+/**
+ * Bridges API Endpoint
+ * 
+ * Provides comprehensive bridge data including status, supported chains, tokens,
+ * fees, and performance metrics. This endpoint serves as the primary data source
+ * for bridge comparison and analysis.
+ * 
+ * @returns {Promise<NextResponse>} JSON response with array of bridge data
+ */
+
 // Mock bridge data - in production, this would come from your data fetchers
+// Contains 46 bridges total: 43 active, 0 paused, 3 inactive
 const mockBridgeData: Bridge[] = [
   {
     id: "1",
@@ -489,8 +500,8 @@ const mockBridgeData: Bridge[] = [
     transferSpeed: "3-12 mins",
     fee: "0.03% - 0.1%",
     link: "https://nomad.xyz",
-    tvl: "$160M",
-    volume24h: "$4.5M",
+    tvl: "NIL",
+    volume24h: "NIL",
     lastUpdated: new Date().toISOString(),
   },
   {
@@ -517,8 +528,8 @@ const mockBridgeData: Bridge[] = [
     transferSpeed: "2-10 mins",
     fee: "0.05% - 0.12%",
     link: "https://www.socket.tech",
-    tvl: "$140M",
-    volume24h: "$3.5M",
+    tvl: "NIL",
+    volume24h: "NIL",
     lastUpdated: new Date().toISOString(),
   },
   {
@@ -573,8 +584,8 @@ const mockBridgeData: Bridge[] = [
     transferSpeed: "5-15 mins",
     fee: "0.08% - 0.18%",
     link: "https://outerbridge.io/",
-    tvl: "$100M",
-    volume24h: "$2.2M",
+    tvl: "NIL",
+    volume24h: "NIL",
     lastUpdated: new Date().toISOString(),
   },
   {
@@ -651,17 +662,19 @@ const mockBridgeData: Bridge[] = [
 
 export async function GET() {
   try {
-    // Simulate API delay
+    // Simulate API processing delay for realistic loading states
     await new Promise((resolve) => setTimeout(resolve, 100))
 
+    // Return successful response with bridge data
     const response: ApiResponse<Bridge[]> = {
-      data: mockBridgeData,
+      data: mockBridgeData, // Array of 46 bridge objects
       success: true,
       lastUpdated: new Date().toISOString(),
     }
 
     return NextResponse.json(response)
   } catch (error) {
+    // Handle any errors and return error response
     const errorResponse: ApiResponse<Bridge[]> = {
       data: [],
       success: false,
