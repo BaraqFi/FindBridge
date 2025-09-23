@@ -1,6 +1,6 @@
 import type { Bridge, ChainData, ApiResponse, MarketSummary } from "@/types/bridge"
 
-const API_BASE_URL = process.env.NODE_ENV === "production" ? "https://your-domain.com/api" : "/api"
+const API_BASE_URL = "/api"
 
 export class ApiClient {
   private async fetchApi<T>(endpoint: string): Promise<ApiResponse<T>> {

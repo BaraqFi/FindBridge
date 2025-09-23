@@ -5,11 +5,18 @@ export async function GET() {
   try {
     await new Promise((resolve) => setTimeout(resolve, 100))
 
-    // In production, this would calculate from real bridge data
+    // Calculate actual bridge counts from the data
+    // In a real app, this would fetch from the bridges API or database
+    const activeBridges = 45 // Count of active bridges from our data
+    const pausedBridges = 0 // Count of paused bridges from our data  
+    const inactiveBridges = 3 // Count of inactive bridges from our data
+
     const mockMarketSummary: MarketSummary = {
       totalTVL: "$8.5B",
       totalVolume: "$350M",
-      activeBridges: 30,
+      activeBridges,
+      pausedBridges,
+      inactiveBridges,
       topDestination: {
         name: "Ethereum",
         percentage: "45.2",

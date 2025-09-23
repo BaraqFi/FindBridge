@@ -482,7 +482,7 @@ const mockBridgeData: Bridge[] = [
   {
     id: "37",
     name: "Nomad",
-    status: "paused",
+    status: "inactive",
     fromChains: ["Ethereum", "Arbitrum", "Optimism", "Polygon"],
     toChains: ["Ethereum", "Arbitrum", "Optimism", "Polygon"],
     supportedTokens: ["ETH", "USDC", "DAI"],
@@ -510,7 +510,7 @@ const mockBridgeData: Bridge[] = [
   {
     id: "39",
     name: "Socket Tech",
-    status: "paused",
+    status: "inactive",
     fromChains: ["Ethereum", "Arbitrum", "Optimism", "Base", "zkSync"],
     toChains: ["Ethereum", "Arbitrum", "Optimism", "Base", "zkSync"],
     supportedTokens: ["ETH", "USDC", "USDT", "DAI"],
@@ -566,7 +566,7 @@ const mockBridgeData: Bridge[] = [
   {
     id: "43",
     name: "Outerbridge",
-    status: "paused",
+    status: "inactive",
     fromChains: ["Ethereum", "BSC", "Polygon"],
     toChains: ["Ethereum", "BSC", "Polygon"],
     supportedTokens: ["ETH", "USDC", "USDT"],

@@ -1,7 +1,7 @@
 export interface Bridge {
   id: string
   name: string
-  status: "active" | "paused"
+  status: "active" | "paused" | "inactive"
   fromChains: string[]
   toChains: string[]
   supportedTokens: string[]
@@ -36,6 +36,8 @@ export interface MarketSummary {
   totalTVL: string
   totalVolume: string
   activeBridges: number
+  pausedBridges?: number
+  inactiveBridges?: number
   topDestination: {
     name: string
     percentage: string

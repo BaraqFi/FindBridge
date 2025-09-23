@@ -14,6 +14,34 @@ import { useBridges } from "@/hooks/useBridges"
 import { useMarketSummary } from "@/hooks/useMarketSummary"
 import Link from "next/link"
 
+// Structured data for SEO
+const structuredData = {
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "FindBridge",
+  "description": "Cross-chain bridge aggregator for seamless cryptocurrency transfers across multiple blockchains",
+  "url": "https://findbridge.vercel.app",
+  "applicationCategory": "FinanceApplication",
+  "operatingSystem": "Web Browser",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+  },
+  "creator": {
+    "@type": "Organization",
+    "name": "FindBridge Team"
+  },
+  "featureList": [
+    "Cross-chain bridge comparison",
+    "Real-time TVL tracking",
+    "Bridge analytics",
+    "Multi-chain support",
+    "Fee comparison",
+    "Transfer speed analysis"
+  ]
+}
+
 export default function FindBridge() {
   const [searchTerm, setSearchTerm] = useState("")
   const [sourceChain, setSourceChain] = useState("all")
@@ -61,7 +89,16 @@ export default function FindBridge() {
   }
 
   return (
-    <div className="min-h-screen bg-background gradient-bg">
+    <>
+      {/* Structured Data for SEO */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(structuredData),
+        }}
+      />
+      
+      <div className="min-h-screen bg-background gradient-bg">
       {/* Header */}
       <header className="border-b border-border/40 backdrop-blur-sm bg-background/80">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -190,9 +227,14 @@ export default function FindBridge() {
                       <div>
                         <p className="text-sm text-muted-foreground mb-1">Active Bridges</p>
                         <p className="text-2xl font-bold text-foreground">{marketSummary.activeBridges}</p>
-                        <p className="text-sm text-muted-foreground mt-1">
-                          {bridges.filter((b) => b.status === "paused").length} paused
-                        </p>
+                        <div className="text-sm text-muted-foreground mt-1 space-y-1">
+                          {marketSummary.pausedBridges && marketSummary.pausedBridges > 0 && (
+                            <div>{marketSummary.pausedBridges} paused</div>
+                          )}
+                          {marketSummary.inactiveBridges && marketSummary.inactiveBridges > 0 && (
+                            <div>{marketSummary.inactiveBridges} inactive</div>
+                          )}
+                        </div>
                       </div>
                       <div className="w-10 h-10 bg-green-500/20 rounded-lg flex items-center justify-center">
                         <Users className="h-5 w-5 text-green-500" />
@@ -330,10 +372,22 @@ export default function FindBridge() {
                         <div className="flex items-center space-x-2">
                           <div
                             className={`w-2 h-2 rounded-full ${
-                              bridge.status === "active" ? "bg-green-500" : "bg-red-500"
+                              bridge.status === "active" 
+                                ? "bg-green-500" 
+                                : bridge.status === "paused" 
+                                ? "bg-yellow-500" 
+                                : "bg-gray-500"
                             }`}
                           />
-                          <Badge variant={bridge.status === "active" ? "default" : "destructive"}>
+                          <Badge 
+                            variant={
+                              bridge.status === "active" 
+                                ? "default" 
+                                : bridge.status === "paused" 
+                                ? "secondary" 
+                                : "outline"
+                            }
+                          >
                             {bridge.status}
                           </Badge>
                         </div>
@@ -396,14 +450,25 @@ export default function FindBridge() {
 
                       {/* Use Bridge Button */}
                       <div className="mt-auto pt-4">
-                        <Button className="w-full" asChild disabled={bridge.status === "paused"}>
+                        <Button 
+                          className="w-full" 
+                          asChild 
+                          disabled={bridge.status === "paused" || bridge.status === "inactive"}
+                        >
                           <a
                             href={bridge.link}
                             target="_blank"
                             rel="noopener noreferrer"
                             className="flex items-center justify-center space-x-2"
                           >
-                            <span>{bridge.status === "paused" ? "Bridge Paused" : "Use Bridge"}</span>
+                            <span>
+                              {bridge.status === "paused" 
+                                ? "Bridge Paused" 
+                                : bridge.status === "inactive" 
+                                ? "Bridge Inactive" 
+                                : "Use Bridge"
+                              }
+                            </span>
                             {bridge.status === "active" && <ExternalLink className="h-4 w-4" />}
                           </a>
                         </Button>
@@ -418,6 +483,7 @@ export default function FindBridge() {
       </section>
 
       <Footer />
-    </div>
+      </div>
+    </>
   )
 }
