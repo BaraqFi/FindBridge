@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { Search, ChevronRight } from "lucide-react"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
@@ -12,7 +12,23 @@ import Link from "next/link"
 
 export default function ChainsPage() {
   const [searchTerm, setSearchTerm] = useState("")
+  const [isHeaderVisible, setIsHeaderVisible] = useState(true)
   const { chains, loading, error } = useChains()
+
+  // Handle scroll behavior to hide/show header
+  useEffect(() => {
+    const handleScroll = () => {
+      const mainContent = document.querySelector('main') || document.querySelector('.chains-content')
+      if (mainContent) {
+        const rect = mainContent.getBoundingClientRect()
+        // Hide header when main content is in view
+        setIsHeaderVisible(rect.top > 100)
+      }
+    }
+
+    window.addEventListener('scroll', handleScroll)
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
 
   const filteredChains = chains.filter((chain) => chain.name.toLowerCase().includes(searchTerm.toLowerCase()))
 
@@ -25,7 +41,9 @@ export default function ChainsPage() {
   return (
     <div className="min-h-screen bg-background gradient-bg">
       {/* Header */}
-      <header className="border-b border-border/40 backdrop-blur-sm bg-background/80">
+      <header className={`fixed top-0 left-0 right-0 z-50 border-b border-border/40 backdrop-blur-sm bg-background/80 transition-transform duration-300 ${
+        isHeaderVisible ? 'translate-y-0' : '-translate-y-full'
+      }`}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
             <Link href="/" className="flex items-center space-x-2">
@@ -58,7 +76,7 @@ export default function ChainsPage() {
       </header>
 
       {/* Page Content */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-24 pb-12">
         {/* Page Header */}
         <div className="mb-8">
           <h1 className="text-4xl font-bold text-foreground mb-4">Chains</h1>

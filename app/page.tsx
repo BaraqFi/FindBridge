@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useMemo } from "react"
+import { useState, useMemo, useEffect } from "react"
 import { Search, ExternalLink, Filter, TrendingUp, Activity, Globe, DollarSign, Users } from "lucide-react"
 import { Input } from "@/components/ui/input"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
@@ -47,6 +47,7 @@ export default function FindBridge() {
   const [searchTerm, setSearchTerm] = useState("")
   const [sourceChain, setSourceChain] = useState("all")
   const [destinationChain, setDestinationChain] = useState("all")
+  const [isHeaderVisible, setIsHeaderVisible] = useState(true)
 
   const { bridges, loading: bridgesLoading, error: bridgesError } = useBridges()
   const {
@@ -54,6 +55,21 @@ export default function FindBridge() {
     loading: summaryLoading,
     error: summaryError,
   } = useMarketSummary()
+
+  // Handle scroll behavior to hide/show header
+  useEffect(() => {
+    const handleScroll = () => {
+      const bridgeFiltersElement = document.getElementById('bridge-filters')
+      if (bridgeFiltersElement) {
+        const rect = bridgeFiltersElement.getBoundingClientRect()
+        // Hide header when bridge filters section is in view
+        setIsHeaderVisible(rect.top > 100)
+      }
+    }
+
+    window.addEventListener('scroll', handleScroll)
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
 
   // Get unique chains for filter dropdowns
   const allChains = useMemo(() => {
@@ -97,7 +113,9 @@ export default function FindBridge() {
       
       <div className="min-h-screen bg-background gradient-bg">
       {/* Header */}
-      <header className="border-b border-border/40 backdrop-blur-sm bg-background/80">
+      <header className={`fixed top-0 left-0 right-0 z-50 border-b border-border/40 backdrop-blur-sm bg-background/80 transition-transform duration-300 ${
+        isHeaderVisible ? 'translate-y-0' : '-translate-y-full'
+      }`}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
             <Link href="/" className="flex items-center space-x-2">
@@ -132,7 +150,7 @@ export default function FindBridge() {
       </header>
 
       {/* Hero Section */}
-      <section className="py-20 px-4 sm:px-6 lg:px-8">
+      <section className="pt-24 pb-20 px-4 sm:px-6 lg:px-8">
         <div className="max-w-4xl mx-auto text-center">
           <h1 className="text-4xl md:text-6xl font-bold text-foreground mb-6">
             Multi-Chain

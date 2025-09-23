@@ -1,5 +1,6 @@
 "use client"
 
+import { useState, useEffect } from "react"
 import { Construction } from "lucide-react"
 import { Footer } from "@/components/footer"
 import { MobileNav } from "@/components/mobile-nav"
@@ -13,10 +14,29 @@ import Link from "next/link"
  * guides, and other helpful resources for users.
  */
 export default function ResourcesPage() {
+  const [isHeaderVisible, setIsHeaderVisible] = useState(true)
+
+  // Handle scroll behavior to hide/show header
+  useEffect(() => {
+    const handleScroll = () => {
+      const mainContent = document.querySelector('main') || document.querySelector('.resources-content')
+      if (mainContent) {
+        const rect = mainContent.getBoundingClientRect()
+        // Hide header when main content is in view
+        setIsHeaderVisible(rect.top > 100)
+      }
+    }
+
+    window.addEventListener('scroll', handleScroll)
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
+
   return (
     <div className="min-h-screen bg-background gradient-bg">
       {/* Header */}
-      <header className="border-b border-border/40 backdrop-blur-sm bg-background/80">
+      <header className={`fixed top-0 left-0 right-0 z-50 border-b border-border/40 backdrop-blur-sm bg-background/80 transition-transform duration-300 ${
+        isHeaderVisible ? 'translate-y-0' : '-translate-y-full'
+      }`}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
             <Link href="/" className="flex items-center space-x-2">
@@ -49,7 +69,7 @@ export default function ResourcesPage() {
       </header>
 
       {/* Main Content */}
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pt-24 pb-20">
         <div className="text-center">
           {/* Construction Icon */}
           <div className="flex justify-center mb-8">
