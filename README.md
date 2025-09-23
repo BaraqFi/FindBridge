@@ -162,8 +162,8 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 
 ## 📞 Support
 
-For support, email support@findbridge.com or create an issue in the repository.
+For support, email me or create an issue in the repository.
 
 ---
 
-**Note**: This is a demonstration project showcasing cross-chain bridge aggregation capabilities. All data is currently mock data for UI/UX demonstration purposes.
+
