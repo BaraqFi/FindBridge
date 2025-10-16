@@ -111,30 +111,28 @@ export default function FindBridge() {
         }}
       />
       
-      <div className="min-h-screen bg-background gradient-bg">
+      <div className="min-h-screen bg-background gradient-bg noise-texture">
       {/* Header */}
-      <header className={`fixed top-0 left-0 right-0 z-50 border-b border-border/40 backdrop-blur-sm bg-background/80 transition-transform duration-300 ${
-        isHeaderVisible ? 'translate-y-0' : '-translate-y-full'
-      }`}>
+      <header className="sticky top-0 left-0 right-0 z-50 border-b border-border/40 backdrop-blur-md bg-background/90 transition-all duration-300 header-shadow">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
-            <Link href="/" className="flex items-center space-x-2">
+            <Link href="/" className="flex items-center space-x-2 group">
               <img 
                 src="/findbridge.png" 
                 alt="FindBridge Logo" 
-                className="w-8 h-8 rounded-lg"
+                className="w-8 h-8 rounded-lg transition-transform duration-300 group-hover:scale-110"
               />
-              <span className="text-xl font-bold text-foreground">FindBridge</span>
+              <span className="text-xl font-extrabold text-foreground">FindBridge</span>
             </Link>
 
             <nav className="hidden md:flex items-center space-x-8">
-              <Link href="/" className="text-primary font-medium">
+              <Link href="/" className="text-primary font-semibold link-hover">
                 Bridges
               </Link>
-              <Link href="/chains" className="text-muted-foreground hover:text-foreground transition-colors">
+              <Link href="/chains" className="text-muted-foreground hover:text-foreground transition-colors font-medium link-hover">
                 Chains
               </Link>
-              <Link href="/resources" className="text-muted-foreground hover:text-foreground transition-colors">
+              <Link href="/resources" className="text-muted-foreground hover:text-foreground transition-colors font-medium link-hover">
                 Resources
               </Link>
             </nav>
@@ -150,21 +148,21 @@ export default function FindBridge() {
       </header>
 
       {/* Hero Section */}
-      <section className="pt-24 pb-20 px-4 sm:px-6 lg:px-8">
+      <section className="pt-32 pb-24 px-4 sm:px-6 lg:px-8 gradient-bg-hero">
         <div className="max-w-4xl mx-auto text-center">
-          <h1 className="text-4xl md:text-6xl font-bold text-foreground mb-6">
+          <h1 className="text-5xl md:text-7xl font-extrabold text-foreground mb-6 tracking-tight">
             Multi-Chain
             <br />
-            <span className="text-primary">Bridge Aggregator</span>
+            <span className="gradient-text">Bridge Aggregator</span>
           </h1>
-          <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
+          <p className="text-xl md:text-2xl text-muted-foreground mb-10 max-w-2xl mx-auto leading-relaxed">
             Comprehensive analytics for cross-chain bridges across multiple blockchains. Monitor TVL, fees, and activity
             with live updates.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button 
               size="lg" 
-              className="bg-primary hover:bg-primary/90"
+              className="shadow-xl hover:shadow-2xl"
               onClick={() => {
                 document.getElementById('bridge-filters')?.scrollIntoView({ 
                   behavior: 'smooth' 
@@ -173,7 +171,7 @@ export default function FindBridge() {
             >
               View Bridges
             </Button>
-            <Button size="lg" variant="outline" asChild>
+            <Button size="lg" variant="outline" asChild className="hover:border-primary">
               <Link href="/chains">Explore Chains</Link>
             </Button>
           </div>
@@ -181,10 +179,10 @@ export default function FindBridge() {
       </section>
 
       {/* Market Summary */}
-      <section className="py-12 px-4 sm:px-6 lg:px-8">
+      <section className="py-16 px-4 sm:px-6 lg:px-8 gradient-bg-content">
         <div className="max-w-7xl mx-auto">
-          <div className="flex items-center justify-between mb-8">
-            <h2 className="text-2xl font-bold text-primary">Market Summary</h2>
+          <div className="flex items-center justify-between mb-10">
+            <h2 className="text-3xl font-extrabold text-foreground tracking-tight">Market Summary</h2>
             {summaryError && <div className="text-sm text-destructive">Failed to load market data</div>}
           </div>
 
@@ -198,49 +196,49 @@ export default function FindBridge() {
               </>
             ) : marketSummary ? (
               <>
-                <Card className="bg-card/50 border-border/50 backdrop-blur-sm">
-                  <CardContent className="p-6">
+                <Card className="bg-card/50 border-border/50 backdrop-blur-sm card-enhanced hover:bg-card/70">
+                  <CardContent className="p-8">
                     <div className="flex items-center justify-between">
                       <div>
-                        <p className="text-sm text-muted-foreground mb-1">Total TVL</p>
-                        <p className="text-2xl font-bold text-foreground">{marketSummary.totalTVL}</p>
-                        <p className="text-sm text-green-500 flex items-center mt-1">
-                          <TrendingUp className="h-3 w-3 mr-1" />
+                        <p className="text-sm font-medium text-muted-foreground mb-2">Total TVL</p>
+                        <p className="text-3xl font-extrabold text-foreground">{marketSummary.totalTVL}</p>
+                        <p className="text-sm text-green-500 flex items-center mt-2 font-semibold">
+                          <TrendingUp className="h-4 w-4 mr-1 stroke-[2.5]" />
                           +5.2%
                         </p>
                       </div>
-                      <div className="w-10 h-10 bg-primary/20 rounded-lg flex items-center justify-center">
-                        <DollarSign className="h-5 w-5 text-primary" />
+                      <div className="w-14 h-14 bg-gradient-to-br from-amber-500/20 to-amber-600/20 rounded-xl flex items-center justify-center shadow-lg">
+                        <DollarSign className="h-7 w-7 icon-financial stroke-[2.5]" />
                       </div>
                     </div>
                   </CardContent>
                 </Card>
 
-                <Card className="bg-card/50 border-border/50 backdrop-blur-sm">
-                  <CardContent className="p-6">
+                <Card className="bg-card/50 border-border/50 backdrop-blur-sm card-enhanced hover:bg-card/70">
+                  <CardContent className="p-8">
                     <div className="flex items-center justify-between">
                       <div>
-                        <p className="text-sm text-muted-foreground mb-1">24h Volume</p>
-                        <p className="text-2xl font-bold text-foreground">{marketSummary.totalVolume}</p>
-                        <p className="text-sm text-green-500 flex items-center mt-1">
-                          <TrendingUp className="h-3 w-3 mr-1" />
+                        <p className="text-sm font-medium text-muted-foreground mb-2">24h Volume</p>
+                        <p className="text-3xl font-extrabold text-foreground">{marketSummary.totalVolume}</p>
+                        <p className="text-sm text-green-500 flex items-center mt-2 font-semibold">
+                          <TrendingUp className="h-4 w-4 mr-1 stroke-[2.5]" />
                           +12.8%
                         </p>
                       </div>
-                      <div className="w-10 h-10 bg-blue-500/20 rounded-lg flex items-center justify-center">
-                        <Activity className="h-5 w-5 text-blue-500" />
+                      <div className="w-14 h-14 bg-gradient-to-br from-cyan-500/20 to-blue-600/20 rounded-xl flex items-center justify-center shadow-lg">
+                        <Activity className="h-7 w-7 icon-activity stroke-[2.5]" />
                       </div>
                     </div>
                   </CardContent>
                 </Card>
 
-                <Card className="bg-card/50 border-border/50 backdrop-blur-sm">
-                  <CardContent className="p-6">
+                <Card className="bg-card/50 border-border/50 backdrop-blur-sm card-enhanced hover:bg-card/70">
+                  <CardContent className="p-8">
                     <div className="flex items-center justify-between">
                       <div>
-                        <p className="text-sm text-muted-foreground mb-1">Active Bridges</p>
-                        <p className="text-2xl font-bold text-foreground">{marketSummary.activeBridges}</p>
-                        <div className="text-sm text-muted-foreground mt-1 space-y-1">
+                        <p className="text-sm font-medium text-muted-foreground mb-2">Active Bridges</p>
+                        <p className="text-3xl font-extrabold text-foreground">{marketSummary.activeBridges}</p>
+                        <div className="text-xs text-muted-foreground mt-2 space-y-1 font-medium">
                           {marketSummary.pausedBridges && marketSummary.pausedBridges > 0 && (
                             <div>{marketSummary.pausedBridges} paused</div>
                           )}
@@ -249,23 +247,23 @@ export default function FindBridge() {
                           )}
                         </div>
                       </div>
-                      <div className="w-10 h-10 bg-green-500/20 rounded-lg flex items-center justify-center">
-                        <Users className="h-5 w-5 text-green-500" />
+                      <div className="w-14 h-14 bg-gradient-to-br from-green-500/20 to-emerald-600/20 rounded-xl flex items-center justify-center shadow-lg">
+                        <Users className="h-7 w-7 icon-status-active stroke-[2.5]" />
                       </div>
                     </div>
                   </CardContent>
                 </Card>
 
-                <Card className="bg-card/50 border-border/50 backdrop-blur-sm">
-                  <CardContent className="p-6">
+                <Card className="bg-card/50 border-border/50 backdrop-blur-sm card-enhanced hover:bg-card/70">
+                  <CardContent className="p-8">
                     <div className="flex items-center justify-between">
                       <div>
-                        <p className="text-sm text-muted-foreground mb-1">Top Destination</p>
+                        <p className="text-sm font-medium text-muted-foreground mb-2">Top Destination</p>
                         <p className="text-lg font-bold text-foreground">{marketSummary.topDestination?.name}</p>
-                        <p className="text-2xl font-bold text-primary">{marketSummary.topDestination?.percentage}%</p>
+                        <p className="text-3xl font-extrabold text-primary mt-1">{marketSummary.topDestination?.percentage}%</p>
                       </div>
-                      <div className="w-10 h-10 bg-purple-500/20 rounded-lg flex items-center justify-center">
-                        <Globe className="h-5 w-5 text-purple-500" />
+                      <div className="w-14 h-14 bg-gradient-to-br from-purple-500/20 to-violet-600/20 rounded-xl flex items-center justify-center shadow-lg">
+                        <Globe className="h-7 w-7 text-purple-500 stroke-[2.5]" />
                       </div>
                     </div>
                   </CardContent>
@@ -277,13 +275,13 @@ export default function FindBridge() {
       </section>
 
       {/* Filters */}
-      <section id="bridge-filters" className="px-4 sm:px-6 lg:px-8 pb-8">
+      <section id="bridge-filters" className="px-4 sm:px-6 lg:px-8 pb-10">
         <div className="max-w-7xl mx-auto">
-          <Card className="bg-card/50 border-border/50 backdrop-blur-sm">
-            <CardContent className="p-6">
-              <div className="flex items-center space-x-2 mb-4">
-                <Filter className="h-5 w-5 text-muted-foreground" />
-                <h2 className="text-lg font-semibold text-foreground">Filter Bridges</h2>
+          <Card className="bg-card/50 border-border/50 backdrop-blur-sm shadow-lg">
+            <CardContent className="p-8">
+              <div className="flex items-center space-x-3 mb-6">
+                <Filter className="h-6 w-6 text-primary stroke-[2.5]" />
+                <h2 className="text-xl font-bold text-foreground">Filter Bridges</h2>
                 {bridgesError && <div className="text-sm text-destructive ml-auto">Failed to load bridge data</div>}
               </div>
 
@@ -373,32 +371,38 @@ export default function FindBridge() {
                 </div>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 {filteredBridges.map((bridge) => (
                   <Card
                     key={bridge.id}
-                    className="bg-card/50 border-border/50 backdrop-blur-sm hover:bg-card/70 transition-all duration-200 flex flex-col h-full"
+                    className={`bg-card/50 border-border/50 backdrop-blur-sm card-enhanced flex flex-col h-full ${
+                      bridge.status === "active" 
+                        ? "border-accent-green" 
+                        : bridge.status === "paused" 
+                        ? "border-accent-amber" 
+                        : "border-accent-gray"
+                    }`}
                   >
-                    <CardHeader className="pb-3">
+                    <CardHeader className="pb-4">
                       <div className="flex items-center justify-between">
-                        <CardTitle className="text-lg font-semibold text-foreground">{bridge.name}</CardTitle>
+                        <CardTitle className="text-xl font-bold text-foreground">{bridge.name}</CardTitle>
                         <div className="flex items-center space-x-2">
                           <div
-                            className={`w-2 h-2 rounded-full ${
+                            className={`w-2.5 h-2.5 rounded-full ${
                               bridge.status === "active" 
-                                ? "bg-green-500" 
+                                ? "bg-green-500 pulse-active" 
                                 : bridge.status === "paused" 
-                                ? "bg-yellow-500" 
+                                ? "bg-amber-500" 
                                 : "bg-gray-500"
                             }`}
                           />
                           <Badge 
                             variant={
                               bridge.status === "active" 
-                                ? "default" 
+                                ? "success" 
                                 : bridge.status === "paused" 
-                                ? "secondary" 
-                                : "outline"
+                                ? "warning" 
+                                : "inactive"
                             }
                           >
                             {bridge.status}
@@ -407,41 +411,43 @@ export default function FindBridge() {
                       </div>
                     </CardHeader>
 
-                    <CardContent className="space-y-4 flex-1 flex flex-col">
-                      <div className="flex-1 space-y-4">
+                    <CardContent className="space-y-5 flex-1 flex flex-col p-8 pt-0">
+                      <div className="flex-1 space-y-5">
                         {/* TVL and Volume */}
                         {bridge.tvl && bridge.volume24h && (
-                          <div className="grid grid-cols-2 gap-4">
+                          <div className="grid grid-cols-2 gap-4 p-4 bg-muted/30 rounded-lg">
                             <div>
-                              <h4 className="text-sm font-medium text-muted-foreground mb-1">TVL</h4>
-                              <p className="text-lg font-bold text-foreground">{bridge.tvl}</p>
+                              <h4 className="text-xs font-semibold text-muted-foreground mb-1.5 uppercase tracking-wider">TVL</h4>
+                              <p className="text-xl font-extrabold text-foreground">{bridge.tvl}</p>
                             </div>
                             <div>
-                              <h4 className="text-sm font-medium text-muted-foreground mb-1">24h Volume</h4>
-                              <p className="text-lg font-bold text-foreground">{bridge.volume24h}</p>
+                              <h4 className="text-xs font-semibold text-muted-foreground mb-1.5 uppercase tracking-wider">24h Volume</h4>
+                              <p className="text-xl font-extrabold text-foreground">{bridge.volume24h}</p>
                             </div>
                           </div>
                         )}
 
                         {/* Chains */}
                         <div>
-                          <h4 className="text-sm font-medium text-muted-foreground mb-2">Supported Routes</h4>
-                          <div className="text-sm text-muted-foreground">
-                            <div className="mb-1">
-                              <span className="font-medium text-foreground">From:</span> {bridge.fromChains.join(", ")}
+                          <h4 className="text-sm font-bold text-muted-foreground mb-3">Supported Routes</h4>
+                          <div className="text-sm text-muted-foreground space-y-2">
+                            <div className="flex items-start">
+                              <span className="font-semibold text-foreground min-w-[45px]">From:</span>
+                              <span className="flex-1">{bridge.fromChains.join(", ")}</span>
                             </div>
-                            <div>
-                              <span className="font-medium text-foreground">To:</span> {bridge.toChains.join(", ")}
+                            <div className="flex items-start">
+                              <span className="font-semibold text-foreground min-w-[45px]">To:</span>
+                              <span className="flex-1">{bridge.toChains.join(", ")}</span>
                             </div>
                           </div>
                         </div>
 
                         {/* Tokens */}
                         <div>
-                          <h4 className="text-sm font-medium text-muted-foreground mb-2">Supported Tokens</h4>
-                          <div className="flex flex-wrap gap-1">
+                          <h4 className="text-sm font-bold text-muted-foreground mb-3">Supported Tokens</h4>
+                          <div className="flex flex-wrap gap-2 max-h-20 overflow-y-auto">
                             {bridge.supportedTokens.map((token) => (
-                              <Badge key={token} variant="secondary" className="text-xs bg-secondary/50">
+                              <Badge key={token} variant="secondary" className="text-xs bg-secondary/60 hover:bg-secondary/80 transition-colors">
                                 {token}
                               </Badge>
                             ))}
@@ -451,31 +457,30 @@ export default function FindBridge() {
                         {/* Speed and Fee */}
                         <div className="grid grid-cols-2 gap-4">
                           <div>
-                            <h4 className="text-sm font-medium text-muted-foreground mb-1">Speed</h4>
-                            <p className="text-sm text-foreground">{bridge.transferSpeed}</p>
+                            <h4 className="text-xs font-semibold text-muted-foreground mb-1.5 uppercase tracking-wider">Speed</h4>
+                            <p className="text-sm font-bold text-foreground">{bridge.transferSpeed}</p>
                           </div>
                           <div>
-                            <h4 className="text-sm font-medium text-muted-foreground mb-1">Fee</h4>
-                            <p className="text-sm text-foreground">{bridge.fee}</p>
+                            <h4 className="text-xs font-semibold text-muted-foreground mb-1.5 uppercase tracking-wider">Fee</h4>
+                            <p className="text-sm font-bold text-foreground">{bridge.fee}</p>
                           </div>
                         </div>
                       </div>
 
                       {/* Use Bridge Button */}
-                      <div className="mt-auto pt-4">
+                      <div className="mt-auto pt-6">
                         {bridge.status === "inactive" ? (
-                          // Inactive bridge button - responsive styling for light/dark mode
-                          <div className="w-full bg-card text-muted-foreground border border-border rounded-md px-4 py-2 text-center cursor-not-allowed dark:border-black">
+                          <div className="w-full bg-muted/50 text-muted-foreground border border-border rounded-lg px-4 py-3 text-center cursor-not-allowed font-semibold">
                             <span className="flex items-center justify-center space-x-2">
                               <span>Bridge Inactive</span>
                             </span>
                           </div>
                         ) : (
-                          // Active/Paused bridge button - normal styling
                           <Button 
-                            className="w-full" 
+                            className="w-full shadow-md hover:shadow-xl" 
                             asChild 
                             disabled={bridge.status === "paused"}
+                            size="lg"
                           >
                             <a
                               href={bridge.link}
@@ -489,7 +494,7 @@ export default function FindBridge() {
                                   : "Use Bridge"
                                 }
                               </span>
-                              {bridge.status === "active" && <ExternalLink className="h-4 w-4" />}
+                              {bridge.status === "active" && <ExternalLink className="h-4 w-4 stroke-[2.5]" />}
                             </a>
                           </Button>
                         )}
