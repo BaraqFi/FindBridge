@@ -115,19 +115,19 @@ export default function FindBridge() {
       <div className="min-h-screen bg-background gradient-bg noise-texture">
       {/* Header */}
       <header className="sticky top-0 left-0 right-0 z-50 border-b border-border/40 backdrop-blur-md bg-background/90 transition-all duration-300 header-shadow">
-        <div className="max-w-7xl mx-auto px-2 sm:px-4 lg:px-8">
-          <div className="grid grid-cols-3 items-center h-16">
-            <div className="flex items-center space-x-2">
-              <Link href="/" className="flex items-center space-x-2 group">
-              <img 
-                src="/findbridge.png" 
-                alt="FindBridge Logo" 
+        <div className="relative h-16">
+          <div className="absolute left-2 top-0 bottom-0 flex items-center">
+            <Link href="/" className="flex items-center space-x-2 group">
+              <img
+                src="/findbridge.png"
+                alt="FindBridge Logo"
                 className="w-8 h-8 rounded-lg transition-transform duration-300 group-hover:scale-110"
               />
               <span className="text-xl font-extrabold text-foreground">FindBridge</span>
-              </Link>
-            </div>
+            </Link>
+          </div>
 
+          <div className="max-w-7xl mx-auto h-16 flex items-center justify-center px-4 sm:px-6 lg:px-8">
             <nav className="hidden md:flex items-center justify-center space-x-8">
               <Link href="/" className="text-primary font-semibold link-hover">
                 Bridges
@@ -139,12 +139,13 @@ export default function FindBridge() {
                 Resources
               </Link>
             </nav>
-            <div className="flex items-center justify-end space-x-2">
-              <div className="hidden md:block">
-                <ThemeToggle />
-              </div>
-              <MobileNav currentPage="bridges" />
+          </div>
+
+          <div className="absolute right-2 top-0 bottom-0 flex items-center">
+            <div className="hidden md:block">
+              <ThemeToggle />
             </div>
+            <MobileNav currentPage="bridges" />
           </div>
         </div>
       </header>

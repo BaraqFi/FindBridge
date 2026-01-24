@@ -184,7 +184,7 @@ export default function ChainsPage() {
 
         {/* Summary Stats */}
         <div className="mt-10 grid grid-cols-1 md:grid-cols-3 gap-8">
-          <Card className="border-[4px] border-black bg-white shadow-[6px_6px_0_0_rgba(0,0,0,1)]">
+          <Card className="market-summary-card market-summary-card--orange">
             <CardContent className="p-6 text-center">
               <div className="text-3xl font-extrabold text-foreground mb-2">
                 {loading ? <div className="h-8 bg-muted animate-pulse rounded w-8 mx-auto" /> : chains.length}
@@ -193,7 +193,7 @@ export default function ChainsPage() {
             </CardContent>
           </Card>
 
-          <Card className="border-[4px] border-black bg-white shadow-[6px_6px_0_0_rgba(0,0,0,1)]">
+          <Card className="market-summary-card market-summary-card--green">
             <CardContent className="p-6 text-center">
               <div className="text-3xl font-extrabold text-foreground mb-2">
                 {loading ? (
@@ -206,7 +206,7 @@ export default function ChainsPage() {
             </CardContent>
           </Card>
 
-          <Card className="border-[4px] border-black bg-white shadow-[6px_6px_0_0_rgba(0,0,0,1)]">
+          <Card className="market-summary-card market-summary-card--pink">
             <CardContent className="p-6 text-center">
               <div className="text-3xl font-extrabold text-foreground mb-2">
                 {loading ? (
