@@ -115,18 +115,20 @@ export default function FindBridge() {
       <div className="min-h-screen bg-background gradient-bg noise-texture">
       {/* Header */}
       <header className="sticky top-0 left-0 right-0 z-50 border-b border-border/40 backdrop-blur-md bg-background/90 transition-all duration-300 header-shadow">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-16">
-            <Link href="/" className="flex items-center space-x-2 group">
+        <div className="max-w-7xl mx-auto px-2 sm:px-4 lg:px-8">
+          <div className="grid grid-cols-3 items-center h-16">
+            <div className="flex items-center space-x-2">
+              <Link href="/" className="flex items-center space-x-2 group">
               <img 
                 src="/findbridge.png" 
                 alt="FindBridge Logo" 
                 className="w-8 h-8 rounded-lg transition-transform duration-300 group-hover:scale-110"
               />
               <span className="text-xl font-extrabold text-foreground">FindBridge</span>
-            </Link>
+              </Link>
+            </div>
 
-            <nav className="hidden md:flex items-center space-x-8">
+            <nav className="hidden md:flex items-center justify-center space-x-8">
               <Link href="/" className="text-primary font-semibold link-hover">
                 Bridges
               </Link>
@@ -137,8 +139,7 @@ export default function FindBridge() {
                 Resources
               </Link>
             </nav>
-
-            <div className="flex items-center space-x-2">
+            <div className="flex items-center justify-end space-x-2">
               <div className="hidden md:block">
                 <ThemeToggle />
               </div>
@@ -149,7 +150,7 @@ export default function FindBridge() {
       </header>
 
       {/* Hero Section (Loot-Drop) */}
-      <section className="pt-24 pb-16 px-4 sm:px-6 lg:px-8">
+      <section className="pt-24 pb-16 px-4 sm:px-6 lg:px-8 hero-bg-blue">
         <div className="max-w-4xl mx-auto text-center">
           <div className="border-[4px] border-black bg-white p-10 shadow-[6px_6px_0_0_rgba(0,0,0,1)]">
             <h1 className="text-5xl md:text-6xl font-black text-foreground mb-4 tracking-tight uppercase">
@@ -164,11 +165,12 @@ export default function FindBridge() {
               <Button
                 size="lg"
                 variant="outline"
+                className="hero-btn-animate hero-btn-blue float-animation"
                 onClick={() => document.getElementById('bridge-filters')?.scrollIntoView({ behavior: 'smooth' })}
               >
                 View Bridges
               </Button>
-              <Button size="lg" variant="outline" asChild>
+              <Button size="lg" variant="outline" asChild className="hero-btn-animate hero-btn-blue float-animation">
                 <Link href="/chains">Explore Chains</Link>
               </Button>
             </div>
@@ -177,7 +179,7 @@ export default function FindBridge() {
       </section>
 
       {/* Market Summary */}
-      <section className="py-16 px-4 sm:px-6 lg:px-8 gradient-bg-content">
+      <section className="py-16 px-4 sm:px-6 lg:px-8 gradient-bg-content market-area-blue">
         <div className="max-w-7xl mx-auto">
           <div className="flex items-center justify-between mb-10">
             <h2 className="text-3xl font-extrabold text-foreground tracking-tight">Market Summary</h2>
@@ -194,7 +196,7 @@ export default function FindBridge() {
               </>
             ) : marketSummary ? (
               <>
-                <Card className="market-summary-card">
+                <Card className="market-summary-card market-summary-card--orange">
                   <CardContent className="p-6">
                     <div className="flex items-center justify-between">
                       <div>
@@ -212,7 +214,7 @@ export default function FindBridge() {
                   </CardContent>
                 </Card>
 
-                <Card className="market-summary-card">
+                <Card className="market-summary-card market-summary-card--green">
                   <CardContent className="p-6">
                     <div className="flex items-center justify-between">
                       <div>
@@ -230,7 +232,7 @@ export default function FindBridge() {
                   </CardContent>
                 </Card>
 
-                <Card className="market-summary-card">
+                <Card className="market-summary-card market-summary-card--pink">
                   <CardContent className="p-6">
                     <div className="flex items-center justify-between">
                       <div>
@@ -252,7 +254,7 @@ export default function FindBridge() {
                   </CardContent>
                 </Card>
 
-                <Card className="market-summary-card">
+                <Card className="market-summary-card market-summary-card--white">
                   <CardContent className="p-6">
                     <div className="flex items-center justify-between">
                       <div>

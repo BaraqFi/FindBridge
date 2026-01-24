@@ -21,12 +21,12 @@ export default function BridgeCard({ bridge }: Props) {
       <div className={styles.content}>
         {bridge.tvl && bridge.volume24h && (
           <div className={styles.metrics}>
-            <div className={styles.metricBox}>
+            <div className={`${styles.metricBox} ${styles.metricPrimary}`}>
               <div className={styles.metricLabel}>TVL</div>
               <div className={styles.metricValue}>{bridge.tvl}</div>
             </div>
 
-            <div className={styles.metricBox}>
+            <div className={`${styles.metricBox} ${styles.metricPrimary}`}>
               <div className={styles.metricLabel}>24H Volume</div>
               <div className={styles.metricValue}>{bridge.volume24h}</div>
             </div>

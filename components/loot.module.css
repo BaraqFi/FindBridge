@@ -26,6 +26,11 @@
 .metricBox{border:3px solid #000;padding:10px;flex:1;display:flex;flex-direction:column;justify-content:center}
 .metricLabel{text-transform:uppercase;font-size:0.625rem;color:#6b7280;margin-bottom:6px}
 .metricValue{font-weight:900;font-size:1.25rem}
+
+/* Primary metric highlight for TVL and 24H Volume */
+.metricPrimary{background: rgb(41,121,255); color: #ffffff}
+.metricPrimary .metricLabel{color: rgba(255,255,255,0.9)}
+.metricPrimary .metricValue{color: #ffffff}
 .routes{font-size:0.9rem;color:#111}
 .tokens{display:flex;flex-wrap:wrap;gap:6px}
 .token{border:2px solid #000;background:#fff;padding:4px 8px;text-transform:uppercase;font-weight:700;font-size:0.7rem}
