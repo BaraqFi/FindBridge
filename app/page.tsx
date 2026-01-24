@@ -7,6 +7,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
+import BridgeCard from "@/components/bridge-card"
 import { ThemeToggle } from "@/components/theme-toggle"
 import { Footer } from "@/components/footer"
 import { MobileNav } from "@/components/mobile-nav"
@@ -147,33 +148,30 @@ export default function FindBridge() {
         </div>
       </header>
 
-      {/* Hero Section */}
-      <section className="pt-32 pb-24 px-4 sm:px-6 lg:px-8 gradient-bg-hero">
+      {/* Hero Section (Loot-Drop) */}
+      <section className="pt-24 pb-16 px-4 sm:px-6 lg:px-8">
         <div className="max-w-4xl mx-auto text-center">
-          <h1 className="text-5xl md:text-7xl font-extrabold text-foreground mb-6 tracking-tight">
-            Multi-Chain
-            <br />
-            <span className="gradient-text">Bridge Aggregator</span>
-          </h1>
-          <p className="text-xl md:text-2xl text-muted-foreground mb-10 max-w-2xl mx-auto leading-relaxed">
-            Comprehensive analytics for cross-chain bridges across multiple blockchains. Monitor TVL, fees, and activity
-            with live updates.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button 
-              size="lg" 
-              className="shadow-xl hover:shadow-2xl"
-              onClick={() => {
-                document.getElementById('bridge-filters')?.scrollIntoView({ 
-                  behavior: 'smooth' 
-                })
-              }}
-            >
-              View Bridges
-            </Button>
-            <Button size="lg" variant="outline" asChild className="hover:border-primary">
-              <Link href="/chains">Explore Chains</Link>
-            </Button>
+          <div className="border-[4px] border-black bg-white p-10 shadow-[6px_6px_0_0_rgba(0,0,0,1)]">
+            <h1 className="text-5xl md:text-6xl font-black text-foreground mb-4 tracking-tight uppercase">
+              Multi-Chain
+              <br />
+              <span style={{ color: 'hsl(var(--safety-yellow))' }}>Bridge Aggregator</span>
+            </h1>
+            <p className="text-lg md:text-xl text-muted-foreground mb-8 max-w-2xl mx-auto leading-relaxed">
+              Comprehensive analytics for cross-chain bridges. Inspect bridges like collectibles — clear stats and bold actions.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <Button
+                size="lg"
+                variant="outline"
+                onClick={() => document.getElementById('bridge-filters')?.scrollIntoView({ behavior: 'smooth' })}
+              >
+                View Bridges
+              </Button>
+              <Button size="lg" variant="outline" asChild>
+                <Link href="/chains">Explore Chains</Link>
+              </Button>
+            </div>
           </div>
         </div>
       </section>
@@ -196,8 +194,8 @@ export default function FindBridge() {
               </>
             ) : marketSummary ? (
               <>
-                <Card className="bg-card/50 border-border/50 backdrop-blur-sm card-enhanced hover:bg-card/70">
-                  <CardContent className="p-8">
+                <Card className="market-summary-card">
+                  <CardContent className="p-6">
                     <div className="flex items-center justify-between">
                       <div>
                         <p className="text-sm font-medium text-muted-foreground mb-2">Total TVL</p>
@@ -214,8 +212,8 @@ export default function FindBridge() {
                   </CardContent>
                 </Card>
 
-                <Card className="bg-card/50 border-border/50 backdrop-blur-sm card-enhanced hover:bg-card/70">
-                  <CardContent className="p-8">
+                <Card className="market-summary-card">
+                  <CardContent className="p-6">
                     <div className="flex items-center justify-between">
                       <div>
                         <p className="text-sm font-medium text-muted-foreground mb-2">24h Volume</p>
@@ -232,8 +230,8 @@ export default function FindBridge() {
                   </CardContent>
                 </Card>
 
-                <Card className="bg-card/50 border-border/50 backdrop-blur-sm card-enhanced hover:bg-card/70">
-                  <CardContent className="p-8">
+                <Card className="market-summary-card">
+                  <CardContent className="p-6">
                     <div className="flex items-center justify-between">
                       <div>
                         <p className="text-sm font-medium text-muted-foreground mb-2">Active Bridges</p>
@@ -254,8 +252,8 @@ export default function FindBridge() {
                   </CardContent>
                 </Card>
 
-                <Card className="bg-card/50 border-border/50 backdrop-blur-sm card-enhanced hover:bg-card/70">
-                  <CardContent className="p-8">
+                <Card className="market-summary-card">
+                  <CardContent className="p-6">
                     <div className="flex items-center justify-between">
                       <div>
                         <p className="text-sm font-medium text-muted-foreground mb-2">Top Destination</p>
@@ -292,7 +290,7 @@ export default function FindBridge() {
                     placeholder="Search bridges or tokens..."
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
-                    className="pl-10 bg-background/50"
+                    className="loot-input pl-10"
                     disabled={bridgesLoading}
                   />
                 </div>
@@ -373,134 +371,7 @@ export default function FindBridge() {
 
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 {filteredBridges.map((bridge) => (
-                  <Card
-                    key={bridge.id}
-                    className={`bg-card/50 border-border/50 backdrop-blur-sm card-enhanced flex flex-col h-full ${
-                      bridge.status === "active" 
-                        ? "border-accent-green" 
-                        : bridge.status === "paused" 
-                        ? "border-accent-amber" 
-                        : "border-accent-gray"
-                    }`}
-                  >
-                    <CardHeader className="pb-4">
-                      <div className="flex items-center justify-between">
-                        <CardTitle className="text-xl font-bold text-foreground">{bridge.name}</CardTitle>
-                        <div className="flex items-center space-x-2">
-                          <div
-                            className={`w-2.5 h-2.5 rounded-full ${
-                              bridge.status === "active" 
-                                ? "bg-green-500 pulse-active" 
-                                : bridge.status === "paused" 
-                                ? "bg-amber-500" 
-                                : "bg-gray-500"
-                            }`}
-                          />
-                          <Badge 
-                            variant={
-                              bridge.status === "active" 
-                                ? "success" 
-                                : bridge.status === "paused" 
-                                ? "warning" 
-                                : "inactive"
-                            }
-                          >
-                            {bridge.status}
-                          </Badge>
-                        </div>
-                      </div>
-                    </CardHeader>
-
-                    <CardContent className="space-y-5 flex-1 flex flex-col p-8 pt-0">
-                      <div className="flex-1 space-y-5">
-                        {/* TVL and Volume */}
-                        {bridge.tvl && bridge.volume24h && (
-                          <div className="grid grid-cols-2 gap-4 p-4 bg-muted/30 rounded-lg">
-                            <div>
-                              <h4 className="text-xs font-semibold text-muted-foreground mb-1.5 uppercase tracking-wider">TVL</h4>
-                              <p className="text-xl font-extrabold text-foreground">{bridge.tvl}</p>
-                            </div>
-                            <div>
-                              <h4 className="text-xs font-semibold text-muted-foreground mb-1.5 uppercase tracking-wider">24h Volume</h4>
-                              <p className="text-xl font-extrabold text-foreground">{bridge.volume24h}</p>
-                            </div>
-                          </div>
-                        )}
-
-                        {/* Chains */}
-                        <div>
-                          <h4 className="text-sm font-bold text-muted-foreground mb-3">Supported Routes</h4>
-                          <div className="text-sm text-muted-foreground space-y-2">
-                            <div className="flex items-start">
-                              <span className="font-semibold text-foreground min-w-[45px]">From:</span>
-                              <span className="flex-1">{bridge.fromChains.join(", ")}</span>
-                            </div>
-                            <div className="flex items-start">
-                              <span className="font-semibold text-foreground min-w-[45px]">To:</span>
-                              <span className="flex-1">{bridge.toChains.join(", ")}</span>
-                            </div>
-                          </div>
-                        </div>
-
-                        {/* Tokens */}
-                        <div>
-                          <h4 className="text-sm font-bold text-muted-foreground mb-3">Supported Tokens</h4>
-                          <div className="flex flex-wrap gap-2 max-h-20 overflow-y-auto">
-                            {bridge.supportedTokens.map((token) => (
-                              <Badge key={token} variant="secondary" className="text-xs bg-secondary/60 hover:bg-secondary/80 transition-colors">
-                                {token}
-                              </Badge>
-                            ))}
-                          </div>
-                        </div>
-
-                        {/* Speed and Fee */}
-                        <div className="grid grid-cols-2 gap-4">
-                          <div>
-                            <h4 className="text-xs font-semibold text-muted-foreground mb-1.5 uppercase tracking-wider">Speed</h4>
-                            <p className="text-sm font-bold text-foreground">{bridge.transferSpeed}</p>
-                          </div>
-                          <div>
-                            <h4 className="text-xs font-semibold text-muted-foreground mb-1.5 uppercase tracking-wider">Fee</h4>
-                            <p className="text-sm font-bold text-foreground">{bridge.fee}</p>
-                          </div>
-                        </div>
-                      </div>
-
-                      {/* Use Bridge Button */}
-                      <div className="mt-auto pt-6">
-                        {bridge.status === "inactive" ? (
-                          <div className="w-full bg-muted/50 text-muted-foreground border border-border rounded-lg px-4 py-3 text-center cursor-not-allowed font-semibold">
-                            <span className="flex items-center justify-center space-x-2">
-                              <span>Bridge Inactive</span>
-                            </span>
-                          </div>
-                        ) : (
-                          <Button 
-                            className="w-full shadow-md hover:shadow-xl" 
-                            asChild 
-                            disabled={bridge.status === "paused"}
-                            size="lg"
-                          >
-                            <a
-                              href={bridge.link}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="flex items-center justify-center space-x-2"
-                            >
-                              <span>
-                                {bridge.status === "paused" 
-                                  ? "Bridge Paused" 
-                                  : "Use Bridge"
-                                }
-                              </span>
-                              {bridge.status === "active" && <ExternalLink className="h-4 w-4 stroke-[2.5]" />}
-                            </a>
-                          </Button>
-                        )}
-                      </div>
-                    </CardContent>
-                  </Card>
+                  <BridgeCard key={bridge.id} bridge={bridge} />
                 ))}
               </div>
             </>

@@ -95,14 +95,14 @@ export default function ChainsPage() {
               placeholder="Search chains..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="pl-10 bg-background/50"
+              className="loot-input pl-10"
               disabled={loading}
             />
           </div>
         </div>
 
         {/* Chains Table */}
-        <Card className="bg-card/50 border-border/50 backdrop-blur-sm shadow-lg">
+        <Card className="border-[4px] border-black bg-white shadow-[6px_6px_0_0_rgba(0,0,0,1)]">
           <CardContent className="p-0">
             {/* Table Header */}
             <div className="grid grid-cols-12 gap-4 p-6 border-b border-border/50 text-sm font-medium text-muted-foreground">
@@ -184,8 +184,8 @@ export default function ChainsPage() {
 
         {/* Summary Stats */}
         <div className="mt-10 grid grid-cols-1 md:grid-cols-3 gap-8">
-          <Card className="bg-card/50 border-border/50 backdrop-blur-sm card-enhanced">
-            <CardContent className="p-8 text-center">
+          <Card className="border-[4px] border-black bg-white shadow-[6px_6px_0_0_rgba(0,0,0,1)]">
+            <CardContent className="p-6 text-center">
               <div className="text-3xl font-extrabold text-foreground mb-2">
                 {loading ? <div className="h-8 bg-muted animate-pulse rounded w-8 mx-auto" /> : chains.length}
               </div>
@@ -193,8 +193,8 @@ export default function ChainsPage() {
             </CardContent>
           </Card>
 
-          <Card className="bg-card/50 border-border/50 backdrop-blur-sm card-enhanced">
-            <CardContent className="p-8 text-center">
+          <Card className="border-[4px] border-black bg-white shadow-[6px_6px_0_0_rgba(0,0,0,1)]">
+            <CardContent className="p-6 text-center">
               <div className="text-3xl font-extrabold text-foreground mb-2">
                 {loading ? (
                   <div className="h-8 bg-muted animate-pulse rounded w-16 mx-auto" />
@@ -206,8 +206,8 @@ export default function ChainsPage() {
             </CardContent>
           </Card>
 
-          <Card className="bg-card/50 border-border/50 backdrop-blur-sm card-enhanced">
-            <CardContent className="p-8 text-center">
+          <Card className="border-[4px] border-black bg-white shadow-[6px_6px_0_0_rgba(0,0,0,1)]">
+            <CardContent className="p-6 text-center">
               <div className="text-3xl font-extrabold text-foreground mb-2">
                 {loading ? (
                   <div className="h-8 bg-muted animate-pulse rounded w-8 mx-auto" />

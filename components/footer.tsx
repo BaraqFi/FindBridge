@@ -8,7 +8,7 @@ export function Footer() {
         <div className="flex flex-col md:flex-row items-center justify-between space-y-4 md:space-y-0">
           {/* Left side - Copyright */}
           <div className="flex items-center space-x-6">
-            <p className="text-muted-foreground text-sm font-medium">© 2025 FindBridge. All rights reserved.</p>
+            <p className="text-muted-foreground text-sm font-medium">© 2026 FindBridge. All rights reserved.</p>
             {/* <Link
               href="https://x.com/findbridge"
               target="_blank"
