@@ -35,7 +35,7 @@ export default function ResourcesPage() {
   return (
     <div className="min-h-screen bg-background gradient-bg noise-texture">
       {/* Header */}
-      <header className="sticky top-0 left-0 right-0 z-50 border-b border-border/40 backdrop-blur-md bg-background/90 transition-all duration-300 header-shadow">
+      <header className="sticky top-0 left-0 right-0 z-50 border-[4px] border-black bg-white transition-all duration-150">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
             <Link href="/" className="flex items-center space-x-2 group">
@@ -72,8 +72,8 @@ export default function ResourcesPage() {
         <div className="text-center">
           {/* Construction Icon */}
           <div className="flex justify-center mb-10">
-            <div className="w-32 h-32 bg-gradient-to-br from-primary/20 to-accent-cyan/20 rounded-2xl flex items-center justify-center shadow-xl card-enhanced">
-              <Construction className="h-16 w-16 text-primary stroke-[2.5]" />
+            <div className="w-32 h-32 border-[4px] border-black bg-white flex items-center justify-center shadow-[6px_6px_0_0_rgba(0,0,0,1)]">
+              <Construction className="h-16 w-16 text-black stroke-[2.5]" />
             </div>
           </div>
 
