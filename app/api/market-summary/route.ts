@@ -23,8 +23,8 @@ export async function GET() {
 
     // Create market summary with calculated statistics
     const mockMarketSummary: MarketSummary = {
-      totalTVL: "$8.5B", // Total Value Locked across all bridges
-      totalVolume: "$350M", // 24-hour trading volume
+      totalTVL: "$17.88B", // Total Value Locked across all bridges
+      totalVolume: "$318M", // 24-hour trading volume
       activeBridges, // Number of currently active bridges
       pausedBridges, // Number of temporarily paused bridges
       inactiveBridges, // Number of permanently inactive bridges
