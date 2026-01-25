@@ -23,7 +23,7 @@ const structuredData = {
   "name": "FindBridge",
   "description": "Cross-chain bridge aggregator for seamless cryptocurrency transfers across multiple blockchains",
   "url": "https://findbridge.vercel.app",
-  "applicationCategory": "FinanceApplication",
+  "applicationCategory": "DefiBridgeIndexer",
   "operatingSystem": "Web Browser",
   "offers": {
     "@type": "Offer",
@@ -114,7 +114,9 @@ export default function FindBridge() {
       
       <div className="min-h-screen bg-background gradient-bg noise-texture">
       {/* Header */}
-      <header className="sticky top-0 left-0 right-0 z-50 border-b border-border/40 backdrop-blur-md bg-background/90 transition-all duration-300 header-shadow">
+      <header className={`sticky top-0 left-0 right-0 z-50 border-b border-border/40 backdrop-blur-md bg-background/90 transition-all duration-300 header-shadow ${
+        !isHeaderVisible ? 'opacity-0 pointer-events-none' : 'opacity-100'
+      }`}>
         <div className="relative h-16">
           <div className="absolute left-2 top-0 bottom-0 flex items-center">
             <Link href="/" className="flex items-center space-x-2 group">
@@ -153,14 +155,14 @@ export default function FindBridge() {
       {/* Hero Section (Loot-Drop) */}
       <section className="pt-24 pb-16 px-4 sm:px-6 lg:px-8 hero-bg-blue">
         <div className="max-w-4xl mx-auto text-center">
-          <div className="border-[4px] border-black bg-white p-10 shadow-[6px_6px_0_0_rgba(0,0,0,1)]">
-            <h1 className="text-5xl md:text-6xl font-black text-foreground mb-4 tracking-tight uppercase">
+          <div className="border-[4px] border-black bg-white p-8 sm:p-10 shadow-[6px_6px_0_0_rgba(0,0,0,1)]">
+            <h1 className="hero-title text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-foreground mb-4 tracking-tight uppercase">
               Multi-Chain
-              <br />
+              <br className="hidden sm:block" />
               <span style={{ color: 'hsl(var(--safety-yellow))' }}>Bridge Aggregator</span>
             </h1>
             <p className="text-lg md:text-xl text-muted-foreground mb-8 max-w-2xl mx-auto leading-relaxed">
-              Comprehensive analytics for cross-chain bridges. Inspect bridges like collectibles — clear stats and bold actions.
+             Discover, compare, and analyze cross-chain bridges across multiple blockchain networks.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button
@@ -201,11 +203,11 @@ export default function FindBridge() {
                   <CardContent className="p-6">
                     <div className="flex items-center justify-between">
                       <div>
-                        <p className="text-sm font-medium text-muted-foreground mb-2">Total TVL</p>
+                        <p className="text-sm font-medium text-muted-foreground mb-2">Total TVL (1mo)</p>
                         <p className="text-3xl font-extrabold text-foreground">{marketSummary.totalTVL}</p>
                         <p className="text-sm text-green-500 flex items-center mt-2 font-semibold">
                           <TrendingUp className="h-4 w-4 mr-1 stroke-[2.5]" />
-                          +5.2%
+                         
                         </p>
                       </div>
                       <div className="w-14 h-14 bg-gradient-to-br from-amber-500/20 to-amber-600/20 rounded-xl flex items-center justify-center shadow-lg">
@@ -223,7 +225,7 @@ export default function FindBridge() {
                         <p className="text-3xl font-extrabold text-foreground">{marketSummary.totalVolume}</p>
                         <p className="text-sm text-green-500 flex items-center mt-2 font-semibold">
                           <TrendingUp className="h-4 w-4 mr-1 stroke-[2.5]" />
-                          +12.8%
+                          
                         </p>
                       </div>
                       <div className="w-14 h-14 bg-gradient-to-br from-cyan-500/20 to-blue-600/20 rounded-xl flex items-center justify-center shadow-lg">
@@ -240,9 +242,9 @@ export default function FindBridge() {
                         <p className="text-sm font-medium text-muted-foreground mb-2">Active Bridges</p>
                         <p className="text-3xl font-extrabold text-foreground">{marketSummary.activeBridges}</p>
                         <div className="text-xs text-muted-foreground mt-2 space-y-1 font-medium">
-                          {marketSummary.pausedBridges && marketSummary.pausedBridges > 0 && (
+                          {/* {marketSummary.pausedBridges && marketSummary.pausedBridges > 0 && (
                             <div>{marketSummary.pausedBridges} paused</div>
-                          )}
+                          )} */}
                           {marketSummary.inactiveBridges && marketSummary.inactiveBridges > 0 && (
                             <div>{marketSummary.inactiveBridges} inactive</div>
                           )}
