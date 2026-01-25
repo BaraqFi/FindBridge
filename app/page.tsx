@@ -157,9 +157,14 @@ export default function FindBridge() {
         <div className="max-w-4xl mx-auto text-center">
           <div className="border-[4px] border-black bg-white p-8 sm:p-10 shadow-[6px_6px_0_0_rgba(0,0,0,1)]">
             <h1 className="hero-title text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-foreground mb-4 tracking-tight uppercase">
-              Multi-Chain
-              <br className="hidden sm:block" />
-              <span style={{ color: 'hsl(var(--safety-yellow))' }}>Bridge Aggregator</span>
+              <span className="whitespace-nowrap">Multi-Chain</span>
+              <br />
+              <span style={{ color: 'hsl(var(--safety-yellow))' }}>
+                Bridge
+                <span className="hidden sm:inline"> Aggregator</span>
+                <br className="sm:hidden" />
+                <span className="sm:hidden">Aggregator</span>
+              </span>
             </h1>
             <p className="text-lg md:text-xl text-muted-foreground mb-8 max-w-2xl mx-auto leading-relaxed">
              Discover, compare, and analyze cross-chain bridges across multiple blockchain networks.
