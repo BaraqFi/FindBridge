@@ -4,7 +4,7 @@ import { useState, useEffect } from "react"
 import { Construction } from "lucide-react"
 import { Footer } from "@/components/footer"
 import { MobileNav } from "@/components/mobile-nav"
-import { ThemeToggle } from "@/components/theme-toggle"
+
 import Link from "next/link"
 
 /**
@@ -58,9 +58,7 @@ export default function ResourcesPage() {
               </Link>
             </nav>
             <div className="flex items-center space-x-2">
-              <div className="hidden md:block">
-                <ThemeToggle />
-              </div>
+
               <MobileNav currentPage="resources" />
             </div>
           </div>

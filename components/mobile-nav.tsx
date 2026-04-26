@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react"
 import { Menu, X, Globe } from "lucide-react"
 import { Button } from "@/components/ui/button"
-import { ThemeToggle } from "@/components/theme-toggle"
+
 import Link from "next/link"
 
 /**
@@ -39,7 +39,7 @@ export function MobileNav({ currentPage = "bridges" }: MobileNavProps) {
     <div className="md:hidden">
       {/* Mobile Menu Button */}
       <div className="flex items-center space-x-2">
-        <ThemeToggle />
+
         <Button
           variant="ghost"
           size="icon"

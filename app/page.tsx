@@ -8,7 +8,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import BridgeCard from "@/components/bridge-card"
-import { ThemeToggle } from "@/components/theme-toggle"
+
 import { Footer } from "@/components/footer"
 import { MobileNav } from "@/components/mobile-nav"
 import { BridgeCardSkeleton, MarketSummarySkeleton } from "@/components/loading-skeleton"
@@ -144,9 +144,7 @@ export default function FindBridge() {
           </div>
 
           <div className="absolute right-2 top-0 bottom-0 flex items-center">
-            <div className="hidden md:block">
-              <ThemeToggle />
-            </div>
+
             <MobileNav currentPage="bridges" />
           </div>
         </div>
