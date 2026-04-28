@@ -1,56 +1,79 @@
 import { NextResponse } from "next/server"
 import type { MarketSummary, ApiResponse } from "@/types/bridge"
+import { BRIDGE_CONFIG, BRIDGE_COUNTS } from "@/lib/bridgeConfig"
+import { fetchLiveMaps, DefiLlamaError } from "@/lib/defillama"
+import { aggregateTotalTVL, aggregateTotalVolume } from "@/lib/transforms"
 
 /**
  * Market Summary API Endpoint
- * 
- * Provides aggregated market data including TVL, volume, and bridge statistics.
- * This endpoint calculates summary statistics from bridge data for dashboard display.
- * 
- * @returns {Promise<NextResponse>} JSON response with market summary data
+ *
+ * Aggregates live TVL and 24h volume across all active bridges using
+ * DeFiLlama data (where slugs are available) plus static fallback values
+ * for bridges without a DeFiLlama listing.
+ *
+ * Bridge counts (active/paused/inactive) come directly from BRIDGE_CONFIG
+ * so they always reflect the actual state of the config file.
+ *
+ * topDestination is kept as a curated static value — deriving this
+ * dynamically would require per-chain volume data which is outside the
+ * scope of the free DeFiLlama endpoints we use.
  */
 export async function GET() {
   try {
-    // Simulate API processing delay
-    await new Promise((resolve) => setTimeout(resolve, 100))
+    const { protocolMap, volumeMap } = await fetchLiveMaps()
 
-    // Calculate actual bridge counts from the data
-    // In a real app, this would fetch from the bridges API or database
-    // Based on the bridge data: 46 total bridges
-    const activeBridges = 43 // Count of active bridges from our data
-    const pausedBridges = 0 // Count of paused bridges from our data  
-    const inactiveBridges = 3 // Count of inactive bridges from our data
+    const totalTVL = aggregateTotalTVL(BRIDGE_CONFIG, protocolMap)
+    const totalVolume = aggregateTotalVolume(BRIDGE_CONFIG, volumeMap)
 
-    // Create market summary with calculated statistics
-    const mockMarketSummary: MarketSummary = {
-      totalTVL: "$17.88B", // Total Value Locked across all bridges
-      totalVolume: "$318M", // 24-hour trading volume
-      activeBridges, // Number of currently active bridges
-      pausedBridges, // Number of temporarily paused bridges
-      inactiveBridges, // Number of permanently inactive bridges
+    const summary: MarketSummary = {
+      totalTVL,
+      totalVolume,
+      activeBridges: BRIDGE_COUNTS.active,
+      pausedBridges: BRIDGE_COUNTS.paused,
+      inactiveBridges: BRIDGE_COUNTS.inactive,
       topDestination: {
-        name: "Ethereum", // Most popular destination chain
-        percentage: "45.2", // Market share percentage
+        name: "Ethereum",
+        percentage: "45.2",
       },
     }
 
-    // Return successful response with market data
     const response: ApiResponse<MarketSummary> = {
-      data: mockMarketSummary,
+      data: summary,
       success: true,
       lastUpdated: new Date().toISOString(),
     }
 
     return NextResponse.json(response)
   } catch (error) {
-    // Handle any errors and return error response
-    const errorResponse: ApiResponse<MarketSummary> = {
-      data: {} as MarketSummary,
-      success: false,
-      lastUpdated: new Date().toISOString(),
-      error: "Failed to fetch market summary",
+    if (error instanceof DefiLlamaError) {
+      console.error(`[market-summary] DeFiLlama error on ${error.endpoint} (${error.status}): ${error.message}`)
+    } else {
+      console.error("[market-summary] Unexpected error:", error)
     }
 
-    return NextResponse.json(errorResponse, { status: 500 })
+    // Fallback: aggregate from static strings only
+    const totalTVL = aggregateTotalTVL(BRIDGE_CONFIG, new Map())
+    const totalVolume = aggregateTotalVolume(BRIDGE_CONFIG, new Map())
+
+    const fallbackSummary: MarketSummary = {
+      totalTVL,
+      totalVolume,
+      activeBridges: BRIDGE_COUNTS.active,
+      pausedBridges: BRIDGE_COUNTS.paused,
+      inactiveBridges: BRIDGE_COUNTS.inactive,
+      topDestination: {
+        name: "Ethereum",
+        percentage: "45.2",
+      },
+    }
+
+    const fallbackResponse: ApiResponse<MarketSummary> & { dataSource: string } = {
+      data: fallbackSummary,
+      success: true,
+      lastUpdated: new Date().toISOString(),
+      dataSource: "static",
+    }
+
+    return NextResponse.json(fallbackResponse)
   }
 }

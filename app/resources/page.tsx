@@ -47,7 +47,7 @@ export default function ResourcesPage() {
               <span className="text-xl font-extrabold text-foreground">FindBridge</span>
             </Link>
             <nav className="hidden md:flex items-center space-x-8">
-              <Link href="/" className="text-muted-foreground hover:text-foreground transition-colors font-medium link-hover">
+              {/* <Link href="/" className="text-muted-foreground hover:text-foreground transition-colors font-medium link-hover">
                 Bridges
               </Link>
               <Link href="/chains" className="text-muted-foreground hover:text-foreground transition-colors font-medium link-hover">
@@ -55,11 +55,11 @@ export default function ResourcesPage() {
               </Link>
               <Link href="/resources" className="text-primary font-semibold link-hover">
                 Resources
-              </Link>
+              </Link> */}
             </nav>
             <div className="flex items-center space-x-2">
 
-              <MobileNav currentPage="resources" />
+              {/* <MobileNav currentPage="resources" /> */}
             </div>
           </div>
         </div>

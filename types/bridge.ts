@@ -14,7 +14,9 @@ export interface Bridge {
   transferSpeed: string // Estimated transfer completion time
   fee: string // Fee structure (percentage or fixed amount)
   link: string // URL to access the bridge
+  bridgeType?: "Lock-Mint" | "Liquidity Pool" | "Intent-Based" | "Native" // Type of bridging mechanism
   tvl?: string // Total Value Locked (optional)
+  change7d?: string | null // 7-day TVL trend indicator (optional)
   volume24h?: string // 24-hour trading volume (optional)
   lastUpdated?: string // Last data update timestamp (optional)
 }
@@ -34,6 +36,7 @@ export interface ChainData {
   marketShare: number // Percentage of total market share
   volume24h: string // 24-hour trading volume
   status: "active" | "limited" // Chain operational status
+  bridgeableTokens?: string[] // Tokens that can be bridged to this chain
   lastUpdated?: string // Last data update timestamp (optional)
 }
 

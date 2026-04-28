@@ -17,18 +17,33 @@ export default function BridgeCard({ bridge }: Props) {
           <div className={styles.badge}>{bridge.status.toUpperCase()}</div>
         </div>
       </div>
+      {bridge.bridgeType && (
+        <div style={{ padding: "0 24px" }}>
+          <span className="inline-block px-2 py-1 bg-accent/50 text-xs font-medium text-foreground rounded-md">
+            {bridge.bridgeType}
+          </span>
+        </div>
+      )}
 
       <div className={styles.content}>
-        {bridge.tvl && bridge.volume24h && (
+        {(bridge.tvl || bridge.volume24h) && (
           <div className={styles.metrics}>
             <div className={`${styles.metricBox} ${styles.metricPrimary}`}>
               <div className={styles.metricLabel}>TVL</div>
-              <div className={styles.metricValue}>{bridge.tvl}</div>
-            </div>
-
-            <div className={`${styles.metricBox} ${styles.metricPrimary}`}>
-              <div className={styles.metricLabel}>24H Volume</div>
-              <div className={styles.metricValue}>{bridge.volume24h}</div>
+              <div className={styles.metricValue} style={{ display: "flex", justifyContent: "space-between", alignItems: "center", width: "100%" }}>
+                <span>{bridge.tvl || "N/A"}</span>
+                {bridge.change7d && (
+                  <span
+                    style={{
+                      fontSize: "0.75em",
+                      fontWeight: 600,
+                      color: bridge.change7d.startsWith("+") ? "#10b981" : "#ef4444",
+                    }}
+                  >
+                    {bridge.change7d.startsWith("+") ? "↑" : "↓"} {bridge.change7d.replace(/[+-]/, "")}
+                  </span>
+                )}
+              </div>
             </div>
           </div>
         )}
@@ -36,8 +51,11 @@ export default function BridgeCard({ bridge }: Props) {
         <div className={styles.routes}>
           <div style={{ fontWeight: 800, marginBottom: 6 }}>Supported Routes</div>
           <div style={{ fontSize: "0.9rem" }}>
-            <strong>From:</strong> {bridge.fromChains.join(", ")}<br />
-            <strong>To:</strong> {bridge.toChains.join(", ")}
+            <strong>From:</strong> {bridge.fromChains.slice(0, 4).join(", ")}
+            {bridge.fromChains.length > 4 && ` +${bridge.fromChains.length - 4} more`}
+            <br />
+            <strong>To:</strong> {bridge.toChains.slice(0, 4).join(", ")}
+            {bridge.toChains.length > 4 && ` +${bridge.toChains.length - 4} more`}
           </div>
         </div>
 

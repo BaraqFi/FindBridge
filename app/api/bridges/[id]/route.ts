@@ -1,43 +1,63 @@
 import { NextResponse } from "next/server"
 import type { Bridge, ApiResponse } from "@/types/bridge"
+import { BRIDGE_CONFIG } from "@/lib/bridgeConfig"
+import { fetchLiveMaps, DefiLlamaError } from "@/lib/defillama"
+import { mergeBridgeWithLiveData } from "@/lib/transforms"
 
-// This would typically fetch from your database or external APIs
-export async function GET(request: Request, { params }: { params: { id: string } }) {
-  try {
-    const { id } = params
+/**
+ * Single Bridge API Endpoint
+ *
+ * Returns a single bridge by id with live TVL and 24h volume data.
+ * The DeFiLlama fetch calls are cached at the fetch() level, so if
+ * /api/bridges was already called in the same 24h window, this is instant.
+ */
+export async function GET(
+  _request: Request,
+  { params }: { params: { id: string } }
+) {
+  const { id } = params
 
-    // In production, this would query your database or call the specific bridge's API
-    // For now, we'll simulate fetching a specific bridge
-    const mockBridge: Bridge = {
-      id,
-      name: "Dynamic Bridge",
-      status: "active",
-      fromChains: ["Ethereum", "Polygon"],
-      toChains: ["Ethereum", "Polygon"],
-      supportedTokens: ["ETH", "USDC"],
-      transferSpeed: "5-10 mins",
-      fee: "0.1%",
-      link: "https://example.com",
-      tvl: "$100M",
-      volume24h: "$5M",
+  // Find the bridge in static config first — fast, no network call
+  const config = BRIDGE_CONFIG.find((b) => b.id === id)
+
+  if (!config) {
+    const notFound: ApiResponse<Bridge> = {
+      data: {} as Bridge,
+      success: false,
       lastUpdated: new Date().toISOString(),
+      error: `Bridge with id "${id}" not found`,
     }
+    return NextResponse.json(notFound, { status: 404 })
+  }
+
+  try {
+    const { protocolMap, volumeMap } = await fetchLiveMaps()
+    const bridge = mergeBridgeWithLiveData(config, protocolMap, volumeMap)
 
     const response: ApiResponse<Bridge> = {
-      data: mockBridge,
+      data: bridge,
       success: true,
       lastUpdated: new Date().toISOString(),
     }
 
     return NextResponse.json(response)
   } catch (error) {
-    const errorResponse: ApiResponse<Bridge> = {
-      data: {} as Bridge,
-      success: false,
-      lastUpdated: new Date().toISOString(),
-      error: "Failed to fetch bridge data",
+    if (error instanceof DefiLlamaError) {
+      console.error(`[bridges/${id}] DeFiLlama error on ${error.endpoint} (${error.status}): ${error.message}`)
+    } else {
+      console.error(`[bridges/${id}] Unexpected error:`, error)
     }
 
-    return NextResponse.json(errorResponse, { status: 500 })
+    // Fall back to static values for this specific bridge
+    const staticBridge = mergeBridgeWithLiveData(config, new Map(), new Map())
+
+    const fallbackResponse: ApiResponse<Bridge> & { dataSource: string } = {
+      data: staticBridge,
+      success: true,
+      lastUpdated: new Date().toISOString(),
+      dataSource: "static",
+    }
+
+    return NextResponse.json(fallbackResponse)
   }
 }

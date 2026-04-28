@@ -84,7 +84,7 @@ export function MobileNav({ currentPage = "bridges" }: MobileNavProps) {
             {/* Navigation Links */}
             <nav className="flex-1 px-4 py-8 bg-background/95 backdrop-blur-md">
               <div className="space-y-4">
-                <Link
+                {/* <Link
                   href="/"
                   className={`block text-lg font-medium transition-colors px-4 py-3 rounded-lg ${
                     currentPage === "bridges"
@@ -116,7 +116,7 @@ export function MobileNav({ currentPage = "bridges" }: MobileNavProps) {
                   onClick={() => setIsOpen(false)}
                 >
                   Resources
-                </Link>
+                </Link> */}
               </div>
             </nav>
 

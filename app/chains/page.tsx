@@ -54,7 +54,7 @@ export default function ChainsPage() {
               <span className="text-xl font-extrabold text-foreground">FindBridge</span>
             </Link>
             <nav className="hidden md:flex items-center space-x-8">
-              <Link href="/" className="text-muted-foreground hover:text-foreground transition-colors font-medium link-hover">
+              {/* <Link href="/" className="text-muted-foreground hover:text-foreground transition-colors font-medium link-hover">
                 Bridges
               </Link>
               <Link href="/chains" className="text-primary font-semibold link-hover">
@@ -62,11 +62,11 @@ export default function ChainsPage() {
               </Link>
               <Link href="/resources" className="text-muted-foreground hover:text-foreground transition-colors font-medium link-hover">
                 Resources
-              </Link>
+              </Link> */}
             </nav>
             <div className="flex items-center space-x-2">
 
-              <MobileNav currentPage="chains" />
+              {/* <MobileNav currentPage="chains" /> */}
             </div>
           </div>
         </div>
@@ -104,10 +104,10 @@ export default function ChainsPage() {
           <CardContent className="p-0">
             {/* Table Header */}
             <div className="grid grid-cols-12 gap-4 p-6 border-b border-border/50 text-sm font-medium text-muted-foreground">
-              <div className="col-span-4">Chain</div>
+              <div className="col-span-3">Chain</div>
               <div className="col-span-2 text-center">Bridges</div>
               <div className="col-span-2 text-center">Total TVL</div>
-              <div className="col-span-2 text-center">Market Share</div>
+              <div className="col-span-3">Bridgeable Tokens</div>
               <div className="col-span-2 text-center">Action</div>
             </div>
 
@@ -116,7 +116,7 @@ export default function ChainsPage() {
               {loading
                 ? Array.from({ length: 5 }).map((_, i) => (
                     <div key={i} className="grid grid-cols-12 gap-4 p-6">
-                      <div className="col-span-4 flex items-center space-x-3">
+                      <div className="col-span-3 flex items-center space-x-3">
                         <div className="w-8 h-8 bg-muted animate-pulse rounded-full" />
                         <div className="space-y-2">
                           <div className="h-4 bg-muted animate-pulse rounded w-24" />
@@ -129,8 +129,12 @@ export default function ChainsPage() {
                       <div className="col-span-2 flex items-center justify-center">
                         <div className="h-4 bg-muted animate-pulse rounded w-16" />
                       </div>
-                      <div className="col-span-2 flex items-center justify-center">
-                        <div className="h-4 bg-muted animate-pulse rounded w-12" />
+                      <div className="col-span-3 flex items-center">
+                        <div className="flex gap-1">
+                          <div className="h-5 bg-muted animate-pulse rounded w-10" />
+                          <div className="h-5 bg-muted animate-pulse rounded w-10" />
+                          <div className="h-5 bg-muted animate-pulse rounded w-10" />
+                        </div>
                       </div>
                       <div className="col-span-2 flex items-center justify-center">
                         <div className="h-8 bg-muted animate-pulse rounded w-16" />
@@ -140,7 +144,7 @@ export default function ChainsPage() {
                   : filteredChains.map((chain) => (
                     <div key={chain.id} className="grid grid-cols-12 gap-4 p-6 table-row-hover">
                       {/* Chain */}
-                      <div className="col-span-4 flex items-center space-x-3">
+                      <div className="col-span-3 flex items-center space-x-3">
                         <div className="w-8 h-8 rounded-full bg-accent flex items-center justify-center text-lg">
                           {chain.icon}
                         </div>
@@ -162,9 +166,18 @@ export default function ChainsPage() {
                         <span className="text-foreground font-medium">{chain.totalTVL}</span>
                       </div>
 
-                      {/* Market Share */}
-                      <div className="col-span-2 flex items-center justify-center">
-                        <span className="text-foreground font-medium">{chain.marketShare}%</span>
+                      {/* Tokens */}
+                      <div className="col-span-3 flex items-center flex-wrap gap-1">
+                        {chain.bridgeableTokens && chain.bridgeableTokens.slice(0, 5).map(t => (
+                          <span key={t} className="px-2 py-0.5 bg-accent/50 text-xs rounded-md font-medium text-foreground">
+                            {t}
+                          </span>
+                        ))}
+                        {chain.bridgeableTokens && chain.bridgeableTokens.length > 5 && (
+                          <span className="text-xs text-muted-foreground font-medium ml-1">
+                            +{chain.bridgeableTokens.length - 5}
+                          </span>
+                        )}
                       </div>
 
                       {/* Action */}
