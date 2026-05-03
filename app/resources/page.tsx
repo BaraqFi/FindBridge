@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react"
 import { Construction } from "lucide-react"
 import { Footer } from "@/components/footer"
-import { MobileNav } from "@/components/mobile-nav"
+
 
 import Link from "next/link"
 
@@ -46,21 +46,8 @@ export default function ResourcesPage() {
               />
               <span className="text-xl font-extrabold text-foreground">FindBridge</span>
             </Link>
-            <nav className="hidden md:flex items-center space-x-8">
-              {/* <Link href="/" className="text-muted-foreground hover:text-foreground transition-colors font-medium link-hover">
-                Bridges
-              </Link>
-              <Link href="/chains" className="text-muted-foreground hover:text-foreground transition-colors font-medium link-hover">
-                Chains
-              </Link>
-              <Link href="/resources" className="text-primary font-semibold link-hover">
-                Resources
-              </Link> */}
-            </nav>
-            <div className="flex items-center space-x-2">
 
-              {/* <MobileNav currentPage="resources" /> */}
-            </div>
+
           </div>
         </div>
       </header>

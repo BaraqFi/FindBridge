@@ -10,7 +10,7 @@ import { Badge } from "@/components/ui/badge"
 import BridgeCard from "@/components/bridge-card"
 
 import { Footer } from "@/components/footer"
-import { MobileNav } from "@/components/mobile-nav"
+
 import { BridgeCardSkeleton, MarketSummarySkeleton } from "@/components/loading-skeleton"
 import { useBridges } from "@/hooks/useBridges"
 import { useMarketSummary } from "@/hooks/useMarketSummary"
@@ -130,23 +130,10 @@ export default function FindBridge() {
           </div>
 
           <div className="max-w-7xl mx-auto h-16 flex items-center justify-center px-4 sm:px-6 lg:px-8">
-            <nav className="hidden md:flex items-center justify-center space-x-8">
-              {/* <Link href="/" className="text-primary font-semibold link-hover">
-                Bridges
-              </Link>
-              <Link href="/chains" className="text-muted-foreground hover:text-foreground transition-colors font-medium link-hover">
-                Chains
-              </Link>
-              <Link href="/resources" className="text-muted-foreground hover:text-foreground transition-colors font-medium link-hover">
-                Resources
-              </Link> */}
-            </nav>
+
           </div>
 
-          <div className="absolute right-2 top-0 bottom-0 flex items-center">
 
-            {/* <MobileNav currentPage="bridges" /> */}
-          </div>
         </div>
       </header>
 
@@ -176,9 +163,7 @@ export default function FindBridge() {
               >
                 View Bridges
               </Button>
-              {/* <Button size="lg" variant="outline" asChild className="hero-btn-animate hero-btn-blue float-animation">
-                <Link href="/chains">Explore Chains</Link>
-              </Button> */}
+
             </div>
           </div>
         </div>
@@ -245,9 +230,7 @@ export default function FindBridge() {
                         <p className="text-sm font-medium text-muted-foreground mb-2">Active Bridges</p>
                         <p className="text-3xl font-extrabold text-foreground">{marketSummary.activeBridges}</p>
                         <div className="text-xs text-muted-foreground mt-2 space-y-1 font-medium">
-                          {/* {marketSummary.pausedBridges && marketSummary.pausedBridges > 0 && (
-                            <div>{marketSummary.pausedBridges} paused</div>
-                          )} */}
+
                           {marketSummary.inactiveBridges && marketSummary.inactiveBridges > 0 && (
                             <div>{marketSummary.inactiveBridges} inactive</div>
                           )}

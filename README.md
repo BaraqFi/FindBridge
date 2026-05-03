@@ -1,169 +1,120 @@
-# FindBridge - Cross-Chain Bridge Aggregator
+# FindBridge
 
-A comprehensive web application for discovering, comparing, and analyzing cross-chain bridges across multiple blockchain networks. Built with Next.js 14, TypeScript, and Tailwind CSS.
+A cross-chain bridge aggregator that helps users discover and analyze blockchain bridges. Live TVL and volume data is pulled from [DeFiLlama](https://defillama.com) and merged with a curated static config of 49 active bridges (plus 7 tracked inactive ones).
 
-## 🚀 Features
+![FindBridge Screenshot](public/findbridgess.png)
 
-- **Bridge Discovery**: Browse and search through 15+ cross-chain bridges
-- **Real-time Analytics**: View TVL, volume, fees, and transfer speeds
-- **Chain Comparison**: Compare bridge support across different blockchain networks
-- **Market Summary**: Get overview of the cross-chain bridge ecosystem
-- **Responsive Design**: Modern UI with dark/light theme support
-- **Advanced Filtering**: Filter bridges by source chain, destination chain, and supported tokens
+## Features
 
-## 🏗️ Tech Stack
+- **Bridge Directory** — Browse 49+ cross-chain bridges with live TVL, 7-day change, transfer speed, fees, and supported tokens
+- **Search & Filter** — Search by bridge name or token; filter by source and destination chain
+- **Market Summary** — Aggregated TVL and 24h volume across all tracked bridges, pulled from DeFiLlama
+- **Chains Page** — View all blockchain networks with bridge counts, bridgeable tokens, and TVL
+- **Live Data** — DeFiLlama integration with 24h in-memory cache and automatic static fallback
+- **SEO** — Structured data, Open Graph, sitemap, robots.txt, and web app manifest
 
-- **Framework**: Next.js 14 (App Router)
-- **Language**: TypeScript
-- **Styling**: Tailwind CSS
-- **UI Components**: Radix UI + shadcn/ui
-- **Icons**: Lucide React
-- **State Management**: React Hooks
-- **API**: Next.js API Routes
+## Tech Stack
 
-## 📊 Supported Bridges
+- **Framework:** Next.js 14 (App Router)
+- **Language:** TypeScript
+- **Styling:** Tailwind CSS 3
+- **UI Components:** Radix UI primitives + shadcn/ui
+- **Icons:** Lucide React
+- **Data Source:** [DeFiLlama API](https://defillama.com/docs/api) (free tier)
 
-The platform currently tracks 15+ major cross-chain bridges including:
-
-- **Stargate Finance** - $1.2B TVL
-- **Hop Protocol** - $890M TVL  
-- **Synapse Protocol** - $650M TVL
-- **Wormhole** - $420M TVL
-- **Celer cBridge** - $380M TVL
-- **Across Protocol** - $320M TVL
-- And many more...
-
-## 🔗 Supported Chains
-
-- Ethereum
-- Arbitrum
-- Polygon
-- BSC (Binance Smart Chain)
-- Avalanche
-- Optimism
-- Solana
-- And others...
-
-## ⚠️ Important Note
-
-**This application currently uses mock data for demonstration purposes.** Real live data integration has not been implemented yet. All bridge information, TVL values, volumes, and market data are simulated for the purpose of showcasing the application's functionality and user interface.
-
-## 🚀 Getting Started
+## Getting Started
 
 ### Prerequisites
 
-- Node.js 18+ 
-- npm, yarn, or pnpm
+- Node.js 18+
+- pnpm
 
-### Installation
+### Install & Run
 
-1. Clone the repository:
 ```bash
-git clone <repository-url>
-cd findbridge-app
-```
+# Clone the repo
+git clone https://github.com/BaraqFi/FindBridge.git
+cd FindBridge
 
-2. Install dependencies:
-```bash
-npm install
-# or
-yarn install
-# or
+# Install dependencies
 pnpm install
-```
 
-3. Run the development server:
-```bash
-npm run dev
-# or
-yarn dev
-# or
+# Copy environment variables
+cp .env.example .env
+
+# Start dev server (runs on port 3290)
 pnpm dev
 ```
 
-4. Open [http://localhost:3000](http://localhost:3000) in your browser.
+Open [http://localhost:3290](http://localhost:3290) in your browser.
 
-## 📁 Project Structure
+### Build for Production
 
-```
-findbridge-app/
-├── app/                    # Next.js App Router
-│   ├── api/               # API routes
-│   │   ├── bridges/       # Bridge data endpoints
-│   │   ├── chains/        # Chain data endpoints
-│   │   └── market-summary/ # Market analytics
-│   ├── chains/            # Chains page
-│   ├── globals.css        # Global styles
-│   ├── layout.tsx         # Root layout
-│   └── page.tsx           # Home page
-├── components/            # React components
-│   ├── ui/               # Reusable UI components
-│   ├── footer.tsx        # Footer component
-│   ├── loading-skeleton.tsx # Loading states
-│   └── theme-*.tsx       # Theme components
-├── hooks/                # Custom React hooks
-│   ├── useBridges.ts     # Bridge data management
-│   ├── useChains.ts      # Chain data management
-│   └── useMarketSummary.ts # Market data management
-├── lib/                  # Utility libraries
-│   ├── api.ts           # API client
-│   └── utils.ts         # Helper functions
-├── types/               # TypeScript type definitions
-│   └── bridge.ts        # Bridge-related types
-└── public/              # Static assets
+```bash
+pnpm build
+pnpm start
 ```
 
-## 🔧 Available Scripts
+## Project Structure
 
-- `npm run dev` - Start development server
-- `npm run build` - Build for production
-- `npm run start` - Start production server
-- `npm run lint` - Run ESLint
+```
+findbridge/
+├── app/
+│   ├── api/
+│   │   ├── bridges/         # GET /api/bridges, GET /api/bridges/[id]
+│   │   ├── chains/          # GET /api/chains
+│   │   └── market-summary/  # GET /api/market-summary
+│   ├── chains/              # Chains explorer page
+│   ├── resources/           # Resources page (placeholder)
+│   ├── globals.css          # Global styles & CSS variables
+│   ├── layout.tsx           # Root layout with metadata
+│   ├── page.tsx             # Home — bridge directory + market summary
+│   ├── manifest.ts          # Web app manifest
+│   ├── sitemap.ts           # Dynamic sitemap
+│   └── robots.txt           # Crawl directives
+├── components/
+│   ├── ui/                  # shadcn/ui primitives (badge, button, card, input, select)
+│   ├── bridge-card.tsx      # Individual bridge card
+│   ├── footer.tsx           # Site footer
+│   ├── loading-skeleton.tsx # Skeleton loaders
+│   └── theme-provider.tsx   # Theme wrapper (light-only)
+├── hooks/
+│   ├── useBridges.ts        # Fetch & manage bridge data
+│   ├── useChains.ts         # Fetch & manage chain data
+│   └── useMarketSummary.ts  # Fetch & manage market summary
+├── lib/
+│   ├── api.ts               # Client-side API wrapper
+│   ├── bridgeConfig.ts      # Static bridge config (56 bridges)
+│   ├── defillama.ts         # DeFiLlama API wrapper with in-memory cache
+│   ├── transforms.ts        # Data formatting & merge utilities
+│   └── utils.ts             # Tailwind merge helper
+├── types/
+│   └── bridge.ts            # TypeScript interfaces
+└── public/                  # Static assets (favicon, OG image, icons)
+```
 
-## 🌐 API Endpoints
+## API Endpoints
 
-- `GET /api/bridges` - Get all bridges
-- `GET /api/bridges/[id]` - Get specific bridge
-- `GET /api/chains` - Get all supported chains
-- `GET /api/market-summary` - Get market overview
+| Endpoint              | Method | Description                           |
+| --------------------- | ------ | ------------------------------------- |
+| `/api/bridges`        | GET    | All bridges with live TVL + volume    |
+| `/api/bridges/[id]`   | GET    | Single bridge by ID                   |
+| `/api/chains`         | GET    | All chains with bridge counts and TVL |
+| `/api/market-summary` | GET    | Aggregated TVL, volume, bridge counts |
 
-## 🎨 UI Components
+All endpoints return a standardized `{ data, success, lastUpdated }` response. If DeFiLlama is unreachable, responses fall back to static config values and include `dataSource: "static"`.
 
-The project uses a comprehensive set of UI components built on Radix UI:
+## Environment Variables
 
-- Cards, Buttons, Inputs
-- Select dropdowns, Badges
-- Loading skeletons, Theme toggle
-- Responsive navigation
-- Data tables and grids
+| Variable              | Required | Description                                              |
+| --------------------- | -------- | -------------------------------------------------------- |
+| `DEFILLAMA_BASE_URL`  | No       | DeFiLlama API base URL (default: `https://api.llama.fi`) |
+| `NEXT_PUBLIC_APP_URL` | No       | Deployed app URL for OG metadata                         |
 
-## 🔮 Future Enhancements
+## License
 
-- **Real-time Data Integration**: Connect to actual bridge APIs
-- **Price Tracking**: Real-time token price updates
-- **Transaction History**: Track bridge transaction history
-- **User Accounts**: Save favorite bridges and preferences
-- **Mobile App**: React Native mobile application
-- **Advanced Analytics**: Historical data and trends
-- **Bridge Comparison Tool**: Side-by-side bridge comparison
-- **Alert System**: Notifications for bridge status changes
+MIT
 
-## 🤝 Contributing
+## Author
 
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
-
-## 📝 License
-
-This project is licensed under the MIT License - see the LICENSE file for details.
-
-## 📞 Support
-
-For support, email me or create an issue in the repository.
-
----
-
-
+Created by [BaraqFi](https://x.com/baraqfi)
